@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form action="./src/php/registration.php" method="POST">
+<form action="../php/registration.php" method="POST">
   <div class="imgcontainer">
     <center><h1>ToyzRUs New User Registration</h1></center>
     <center><p> Please enter a username and  
@@ -16,13 +16,13 @@
   </div>
 
   <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input id="username" type="text" placeholder="Enter Username" name="uname" required>
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
         
-    <button type="submit" onclick="register()">Register!</button>
+    <button type="submit">Register!</button>
     <button type="button" onclick="go_to_login()" class="secondarybtn"> Go Back to Login </button>
   </div>
 </form>

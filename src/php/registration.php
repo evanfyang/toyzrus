@@ -32,7 +32,8 @@ else {
         $userIDQuery = "SELECT userID FROM Users";
         $result = $mysqli->query($userIDQuery);
         $userIDs = $result->fetch_array(MYSQLI_ASSOC);
-        $uniqueID = false;
+        $newUserID = rand();
+		$uniqueID = false;
         while (!uniqueID) {
             $newUserID = rand();
             if (!in_array(newUserID, $userIDs)) {

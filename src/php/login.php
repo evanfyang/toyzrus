@@ -29,25 +29,25 @@ else {
     exit;
   }
   // incorrect username or password
-  else if ($result->num_rows === 0) {
+  else if ($result->num_rows == 0) {
     echo "<p>Login failed. Retry or register to continue.</p>";
     // go back to login button
     //header("Location: /url/to/the/other/page");
   }
   // user is staff
-  else if (strtolower($row["isStaff"]) == "true"){
+  else if ($row["isStaff"] == 1){
       // go to staff page
-      echo "<p>Login successful. Welcome, staff.</p>";
+      echo "<p>Login successful. Welcome, Staff.</p>";
   }
   // user is manager
-  else if (strtolower($row["isStaff"]) == "true"){
+  else if ($row["isStaff"] == 1){
       // go to manager page
-      echo "<p>Login successful. Welcome, manager.</p>";
+      echo "<p>Login successful. Welcome, Manager.</p>";
   }
   // regular user
   else {
     // registered user login was successful
-    echo "<p>Login successful. Welcome, " . $username . ".</p>";
+    echo "<p>Login successful. Welcome, " . $username . "!</p>";
   }
 }
 ?>
