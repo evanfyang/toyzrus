@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ToyzRUs Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./src/css/index.css">
+</head>
+<body>
+
+<form>
+  <div class="imgcontainer">
+    <center><h1>Welcome to ToyzRUs!</h1></center>
+    <center><p> Your one stop shop for toys and books. 
+        <br> Please login to begin shopping!</p></center> 
+    <img src="./src/assets/logo.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input id="username" type="text" placeholder="Enter Username" name="uname" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+        
+    <button type="submit" onclick="login()">Login</button>
+    <button type="button" onclick="go_to_registration()" class="registerbtn"> New User? Register Here! </button>
+  </div>
+</form>
+
+<script>
+function go_to_registration() {
+    window.location.href = './src/html/registration.html';
+}
+
+function login() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("username").value;
+    console.log(username);
+    console.log(password);
+}
+</script>
+
+</body>
+</html>
