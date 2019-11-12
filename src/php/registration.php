@@ -20,7 +20,7 @@ if ($mysqli->connect_errno) {
     exit;
 }
 else {
-    $query = "SELECT * FROM Users WHERE username = '$username' AND password = '$password'";
+    $query = "SELECT * FROM Users WHERE username = '$username'";
     $result = $mysqli->query($query);
     $row = $result->fetch_array(MYSQLI_ASSOC);
     if (!$result) {
