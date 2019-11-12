@@ -8,7 +8,8 @@ USE ecommerce;
 
 CREATE TABLE Users (userID INT PRIMARY KEY NOT NULL, username VARCHAR(30), password VARCHAR(30), isStaff BOOL, isManager BOOL); 
 CREATE TABLE Products (productID INT PRIMARY KEY NOT NULL, price FLOAT, inventory INT, category VARCHAR(30));
-CREATE TABLE Orders (orderID INT PRIMARY KEY NOT NULL, 
-    FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (productID) REFERENCES Products(productID),
+CREATE TABLE Orders (orderID INT PRIMARY KEY NOT NULL, cID INT, pID INT,
+    FOREIGN KEY (cID) REFERENCES Users(userID), FOREIGN KEY (pID) REFERENCES Products(productID),
     status VARCHAR(30), money_saved FLOAT, isCancelled BOOL);
-CREATE TABLE ShoppingBasket (FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (productID) REFERENCES Products(productID));
+CREATE TABLE ShoppingBasket (cID INT, pID INT, 
+    FOREIGN KEY (cID) REFERENCES Users(userID), FOREIGN KEY (pID) REFERENCES Products(productID));
