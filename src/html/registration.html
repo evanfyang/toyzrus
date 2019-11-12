@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form>
+<form action="./src/php/registration.php" method="POST">
   <div class="imgcontainer">
     <center><h1>ToyzRUs New User Registration</h1></center>
     <center><p> Please enter a username and  
@@ -23,16 +23,14 @@
     <input id="password" type="password" placeholder="Enter Password" name="psw" required>
         
     <button type="submit" onclick="register()">Register!</button>
+    <button type="button" onclick="go_to_login()" class="secondarybtn"> Go Back to Login </button>
   </div>
 </form>
 
 <script>
 
-function register() {
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("username").value;
-    console.log(username);
-    console.log(password);
+function go_to_login() {
+    window.location.href = '../../index.html';
 }
 </script>
 

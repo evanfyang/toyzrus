@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form>
+<form action="./src/php/login.php" method="POST">
   <div class="imgcontainer">
     <center><h1>Welcome to ToyzRUs!</h1></center>
     <center><p> Your one stop shop for toys and books. 
@@ -16,27 +16,20 @@
   </div>
 
   <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input id="username" type="text" placeholder="Enter Username" name="uname" required>
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
         
-    <button type="submit" onclick="login()">Login</button>
-    <button type="button" onclick="go_to_registration()" class="registerbtn"> New User? Register Here! </button>
+    <button type="submit"> Login </button>
+    <button type="button" onclick="go_to_registration()" class="secondarybtn"> New User? Register Here! </button>
   </div>
 </form>
 
 <script>
 function go_to_registration() {
     window.location.href = './src/html/registration.html';
-}
-
-function login() {
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("username").value;
-    console.log(username);
-    console.log(password);
 }
 </script>
 
