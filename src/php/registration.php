@@ -2,6 +2,7 @@
 // extract POST variables from form submission
 $username = $_POST["username"];
 $password = $_POST["password"];
+$address = $_POST["address"];
 
 // connect to mysql
 $host = "localhost";
@@ -28,23 +29,23 @@ else {
         exit;
     }
     else if ($result->num_rows === 0) {
-        // find a new unique userID
-        $userIDQuery = "SELECT userID FROM Users";
-        $result = $mysqli->query($userIDQuery);
-        $userIDs = $result->fetch_array(MYSQLI_ASSOC);
-        $newUserID = rand();
-		$uniqueID = false;
-        while (!uniqueID) {
-            $newUserID = rand();
-            if (!in_array(newUserID, $userIDs)) {
-                $uniqueID = true;
-            }
-        }
+        // // find a new unique userID
+        // $userIDQuery = "SELECT userID FROM Users";
+        // $result = $mysqli->query($userIDQuery);
+        // $userIDs = $result->fetch_array(MYSQLI_ASSOC);
+        // $newUserID = rand();
+		// $uniqueID = false;
+        // while (!uniqueID) {
+        //     $newUserID = rand();
+        //     if (!in_array(newUserID, $userIDs)) {
+        //         $uniqueID = true;
+        //     }
+        // }
         // insert new user
-        $insertUser = "INSERT INTO Users(userID,username,password,isStaff,isManager) VALUES('$newUserID','$username','$password',FALSE,FALSE)";
+        $insertUser = "INSERT INTO Users(username,password,address,isStaff,isManager) VALUES('$username','$password','$address',FALSE,FALSE)";
         $result = $mysqli->query($insertUser);
         if (!$result) {
-            echo "Registration failed: " . $mysqli->error . "\n";
+            echo "<p>Registration failed: " . $mysqli->error . "</p>\n";
             exit;
         }
         else {

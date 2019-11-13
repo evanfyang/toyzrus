@@ -35,18 +35,18 @@ else {
     //header("Location: /url/to/the/other/page");
   }
   // user is staff
-  else if ($row["isStaff"] == 1){
+  else if ($row["isStaff"] && !$row["isManager"]){
       // go to staff page
       echo "<p>Login successful. Welcome, Staff.</p>";
   }
   // user is manager
-  else if ($row["isStaff"] == 1){
+  else if ($row["isStaff"] && $row["isManager"]){
       // go to manager page
       echo "<p>Login successful. Welcome, Manager.</p>";
   }
   // regular user
   else {
-    // registered user login was successful
+    // login successful, go to normal homepage
     echo "<p>Login successful. Welcome, " . $username . "!</p>";
   }
 }
