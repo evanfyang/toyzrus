@@ -1,10 +1,10 @@
 <?php
+session_start();
 // extract POST variables from form submission
 $username = $_POST["username"];
 $password = $_POST["password"];
 
 // set session variables
-session_start();
 $_SESSION['username'] = $username;
 $_SESSION['password'] = $password;
 

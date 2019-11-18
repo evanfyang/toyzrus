@@ -1,14 +1,14 @@
 <?php
 session_start();
-$username = $_SESSION['username'];
-$password = $_SESSION['password'];
-
 if(!isset($_SESSION['username']))
 {
     // not logged in
     header('Location: ../../index.html');
     exit();
 }
+
+$username = $_SESSION['username'];
+$password = $_SESSION['password'];
 
 ?>
 
@@ -27,9 +27,6 @@ if(!isset($_SESSION['username']))
   <a href="./customer_books.php">Books</a>
   <a href="./customer_orders.php">Orders</a>
   <a href="customer_shoppingcart.php">Shopping Cart</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
 </div>
 
 <div class="imgcontainer">
@@ -39,25 +36,7 @@ if(!isset($_SESSION['username']))
         <br> above to start shopping!</p> 
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
 	<br>
-    <button type="button" onclick="logout()" class="secondarybtn"> Logout </button>
+    <button type="button" onclick="location.href='./logout.php'" class="secondarybtn"> Logout </button>
 </div>
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-
-function logout() {
-    <?php session_unset() ?>
-    window.location.href = '../../index.html';
-}
-
-</script>
-
 </body>
 </html>
