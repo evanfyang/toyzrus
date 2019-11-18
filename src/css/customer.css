@@ -59,7 +59,8 @@ img.avatar {
     border-radius: 0%;
 }
 
-.table {
+.table, th, td {
+    border: 1px solid black;
     text-align: center;
     width: 100%;
 }
