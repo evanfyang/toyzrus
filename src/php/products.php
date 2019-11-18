@@ -62,7 +62,8 @@ else {
   <?php
     echo "<ul>";
     while ($row = $result->fetch_assoc()) {
-      echo "<li>$row["name"], $row["price"], $row["inventory"], $row["category"]</li>";
+      // echo "<li>$row["name"], $row["price"], $row["inventory"], $row["category"]</li>";
+      echo "<li>" . $row["name"] . ", " . $row["price"] . ", " . $row["inventory"] . ", " . $row["category"] . "</li>";
     }
     echo "</ul>";
 
