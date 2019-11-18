@@ -23,8 +23,7 @@ $password = $_SESSION['password'];
 
 <div class="topnav" id="myTopnav">
   <a href="./customer_homepage.php" class="active">Home</a>
-  <a href="./customer_toys.php">Toys</a>
-  <a href="./customer_books.php">Books</a>
+  <a href="./products.php">Products</a>
   <a href="./customer_orders.php">Orders</a>
   <a href="customer_shoppingcart.php">Shopping Cart</a>
 </div>

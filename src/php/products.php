@@ -23,15 +23,14 @@ $password = $_SESSION['password'];
 
 <div class="topnav" id="myTopnav">
   <a href="./customer_homepage.php">Home</a>
-  <a href="./customer_toys.php">Toys</a>
-  <a href="./customer_books.php" class="active">Books</a>
+  <a href="./products.php" class="active">Products</a>
   <a href="./customer_orders.php">Orders</a>
   <a href="customer_shoppingcart.php">Shopping Cart</a>
 </div>
 
 
 <div class="imgcontainer">
-    <h1>Books</h1>
+    <h1>Products</h1>
 <!--
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
 -->
