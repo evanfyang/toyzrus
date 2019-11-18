@@ -3,6 +3,11 @@
 $username = $_POST["username"];
 $password = $_POST["password"];
 
+// set session variables
+session_start();
+$_SESSION['username'] = $username;
+$_SESSION['password'] = $password;
+
 // connect to mysql
 $host = "localhost";
 $mysqlUser = "root";
@@ -47,7 +52,8 @@ else {
   // regular user
   else {
     // login successful, go to normal homepage
-    echo "<p>Login successful. Welcome, " . $username . "!</p>";
+    header("Location: http://localhost/ToyzRUs/src/php/customer_homepage.php");
+    exit;
   }
 }
 ?>
