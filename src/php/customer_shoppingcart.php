@@ -10,6 +10,34 @@ if(!isset($_SESSION['username']))
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
+// connect to mysql
+$host = "localhost";
+$mysqlUser = "root";
+$mysqlPassword = "pwd";
+$mysqldb = "ecommerce";
+$mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
+
+// check connection
+if ($mysqli->connect_errno) {
+  echo "Could not connect to database \n";
+  echo "Error: ". $mysqli->connect_error . "\n";
+  exit;
+}
+else {
+  // validate user login by querying form value
+  $query = "SELECT * FROM ShoppingBasket;"; // FIXME: choose what we want to display for each shopping cart item
+  $result = $mysqli->query($query);
+  if (!$result) {
+    echo "Query failed: " . $mysqli->error . "\n";
+    exit;
+  }
+  // incorrect product query
+  else if ($result->num_rows == 0) {
+    echo "<p>Something went wrong on our end. Please try again.</p>";
+    exit;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
