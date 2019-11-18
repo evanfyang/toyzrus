@@ -22,8 +22,8 @@ if(!isset($_SESSION['username']))
 <body>
 
 <div class="topnav" id="myTopnav">
-  <a href="./customer_homepage.php" class="active">Home</a>
-  <a href="./customer_toys.php">Toys</a>
+  <a href="./customer_homepage.php">Home</a>
+  <a href="./customer_toys.php" class="active">Toys</a>
   <a href="./customer_books.php">Books</a>
   <a href="./customer_orders.php">Orders</a>
   <a href="customer_shoppingcart.php">Shopping Cart</a>
@@ -32,15 +32,15 @@ if(!isset($_SESSION['username']))
   </a>
 </div>
 
+<!--
 <div class="imgcontainer">
     <h1>ToyzRUs Homepage</h1>
     <h2>Welcome, <?php echo "$username"?>!</h2>
     <p> Please select one of the links  
         <br> above to start shopping!</p> 
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
-	<br>
-    <button type="button" onclick="logout()" class="secondarybtn"> Logout </button>
 </div>
+-->
 
 <script>
 function myFunction() {
