@@ -20,7 +20,7 @@ INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('sta
 INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('manager', 'password', '123 Main St.', TRUE, TRUE);
 INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('user', 'password', '123 Main St.', FALSE, FALSE); 
 /* professor access */
-INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('cs405', 'cs405', '123 Main St.', TRUE, TRUE); 
+INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('cs405', 'cs405', '123 Main St.', FALSE, FALSE); 
 
 /*
 Products sample data:

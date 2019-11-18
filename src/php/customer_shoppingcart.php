@@ -33,8 +33,8 @@ else {
   }
   // incorrect product query
   else if ($result->num_rows == 0) {
-    echo "<p>Something went wrong on our end. Please try again.</p>";
-    exit;
+    //echo "<p>Something went wrong on our end. Please try again.</p>";
+    //exit;
   }
 }
 
@@ -59,9 +59,7 @@ else {
 
 <div class="imgcontainer">
     <h1>Shopping Cart</h1>
-<!--
-    <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
--->
+    <img src="../assets/shoppingcartlogo.png" alt="Avatar" class="avatar">
 </div>
 
 </body>
