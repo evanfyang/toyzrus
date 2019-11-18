@@ -52,7 +52,7 @@ else {
   // regular user
   else {
     // login successful, go to normal homepage
-    header("Location: http://localhost/ToyzRUs/src/php/customer_homepage.php");
+    header("Location: ./customer_homepage.php");
     exit;
   }
 }

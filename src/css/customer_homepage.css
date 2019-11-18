@@ -32,6 +32,19 @@ body {
     display: none;
 }
 
+button {
+  background-color: #1E429A;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
 .secondarybtn {
     background-color: #f44336;
 }

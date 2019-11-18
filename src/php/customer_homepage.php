@@ -1,7 +1,14 @@
 <?php
-
+session_start();
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
+
+if(!isset($_SESSION['username']))
+{
+    // not logged in
+    header('Location: ../../index.html');
+    exit();
+}
 
 ?>
 
@@ -27,10 +34,11 @@ $password = $_SESSION['password'];
 
 <div class="imgcontainer">
     <h1>ToyzRUs Homepage</h1>
-    <h2>Welcome, <?php echo $username ?>!</h2>
+    <h2>Welcome, <?php echo "$username"?>!</h2>
     <p> Please select one of the links  
         <br> above to start shopping!</p> 
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
+	<br>
     <button type="button" onclick="logout()" class="secondarybtn"> Logout </button>
 </div>
 
