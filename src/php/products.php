@@ -45,7 +45,7 @@ else {
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../css/customer.css">
+<link rel="stylesheet" type="text/css" href="../css/customer.css" />
 </head>
 <body>
 
@@ -64,38 +64,36 @@ else {
 
 
 <div>
-  <table>
-    <tr>
-      <th> Product Name </th>
-      <th> Price </th>
-      <th> Inventory </th>
-      <th> Category </th>
-      <th> Add Item </th>
-    </tr>
   <?php
-      // echo '<table>';
-      // echo '<tr>';
-      // echo '<th> Product Name </th>';
-      // echo '<th> Price </th>';
-      // echo '<th> Inventory </th>';
-      // echo '<th> Category </th>';
-      // echo '<th> Add Item </th>';
-      // echo '</tr>';
+      echo '<table>';
+      echo '<tr>';
+      echo '<th> Product Name </th>';
+      echo '<th> Price </th>';
+      echo '<th> Inventory </th>';
+      echo '<th> Category </th>';
+      echo '<th> Add Item </th>';
+      echo '</tr>';
       while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["price"] . '</td>';
         echo '<td>' . $row["inventory"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
-        echo '</tr>';
-        // echo "<li>$row["name"], $row["price"], $row["inventory"], $row["category"]</li>";
-        //echo "<li>" . $row["name"] . ", " . $row["price"] . ", " . $row["inventory"] . ", " . $row["category"] . "</li>";
+        echo '<td><center><button id="' . $row["productID"] .'" onClick="addToCart(this.id)" type="button"> Add to Cart </button></center></td>';
+		echo '</tr>';
       }
-      echo '</table>';
-
+	  echo '</table>';
       $mysqli->close();
   ?>
 </div>
+
+<?php echo '
+<script>
+function addToCart(productID) {
+	console.log(productID);
+}
+</script>' 
+?>
 
 </body>
 </html>

@@ -33,20 +33,29 @@ body {
 }
 
 button {
-  background-color: #1E429A;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
+
 }
 
 button:hover {
   opacity: 0.8;
 }
 
+.primarybtn {
+	background-color: #1E429A;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
 .secondarybtn {
     background-color: #f44336;
+	color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
 }
 
 .imgcontainer {
@@ -59,10 +68,14 @@ img.avatar {
     border-radius: 0%;
 }
 
-.table, th, td {
-    border: 1px solid black;
-    text-align: center;
-    width: 100%;
+table {
+	border: 1px solid black; 
+	width: 100%; 
+	align="center";
+}
+
+tr, th, td {
+	border: 1px solid black;
 }
 
 @media screen and (max-width: 600px) {
