@@ -28,22 +28,22 @@ INSERT INTO Products (name, price, inventory, category) VALUES ('Yoda', 34.99, 2
 INSERT INTO Products (name, price, inventory, category) VALUES ('Spiderman', 8.75, 'action figures');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Superman', 4.47, 'action figures');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Batman', 4.47, 'action figures');
-INSERT INTO Products (name, price, inventory, category) VALUES ('Transformer: Optimus Prime', 30.49, 'action figures');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Transformer Optimus Prime', 30.49, 'action figures');
 INSERT INTO Products (name, price, inventory, category) VALUES ('GI Joe', 15.99, 'action figures');
 
 INSERT INTO Products (name, price, inventory, category) VALUES ('LOL Suprise - Pink Girls', 89.00, 'bikes');
-INSERT INTO Products (name, price, inventory, category) VALUES ('Transformers: Bumblebee - Yellow/Gray Boys', 124.99, 'bikes');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Transformer Bumblebee - Yellow Boys', 124.99, 'bikes');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Hot Wheels - Red/Silver Unisex', 98.99, 'bikes');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Disney Princess - Purple Girls', 94.99, 'bikes');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Disney Frozen - Blue Girls', 89.00, 'bikes');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Trolls - Green/Pink Unisex', 74.99, 'bikes');
 
-INSERT INTO Products (name, price, inventory, category) VALUES ('Dora', , 'dolls');
-INSERT INTO Products (name, price, inventory, category) VALUES ('Barbie', , 'dolls');
-INSERT INTO Products (name, price, inventory, category) VALUES ('Bratz', , 'dolls');
-INSERT INTO Products (name, price, inventory, category) VALUES ('Ken', , 'dolls');
-INSERT INTO Products (name, price, inventory, category) VALUES ('American Girl', , 'dolls');
-INSERT INTO Products (name, price, inventory, category) VALUES ('Cinderella', , 'dolls');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Dora', 25.99, 'dolls');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Barbie', 17.99, 'dolls');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Bratz', 20.24, 'dolls');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Ken', 19.29, 'dolls');
+INSERT INTO Products (name, price, inventory, category) VALUES ('American Girl', 98.00, 'dolls');
+INSERT INTO Products (name, price, inventory, category) VALUES ('Cinderella', 35.90, 'dolls');
 
 INSERT INTO Products (name, price, inventory, category) VALUES ('Pictionary', 16.99, 'games');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Monopoly', 12.59, 'games');
