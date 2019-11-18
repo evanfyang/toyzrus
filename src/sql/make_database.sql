@@ -18,7 +18,9 @@ CREATE TABLE ShoppingBasket (userID INT NOT NULL, prodID INT NOT NULL,
 /* Create initial users */
 INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('staff', 'password', '123 Main St.', TRUE, FALSE);
 INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('manager', 'password', '123 Main St.', TRUE, TRUE);
-INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('user', 'password', '123 Main St.', FALSE, FALSE);   
+INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('user', 'password', '123 Main St.', FALSE, FALSE); 
+/* professor access */
+INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('cs405', 'cs405', '123 Main St.', TRUE, TRUE); 
 
 /*
 Products sample data:
