@@ -10,6 +10,34 @@ if(!isset($_SESSION['username']))
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
+// connect to mysql
+$host = "localhost";
+$mysqlUser = "root";
+$mysqlPassword = "pwd";
+$mysqldb = "ecommerce";
+$mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
+
+// check connection
+if ($mysqli->connect_errno) {
+  echo "Could not connect to database \n";
+  echo "Error: ". $mysqli->connect_error . "\n";
+  exit;
+}
+else {
+  // validate user login by querying form value
+  $query = "SELECT * FROM Products;";
+  $result = $mysqli->query($query);
+  if (!$result) {
+    echo "Query failed: " . $mysqli->error . "\n";
+    exit;
+  }
+  // incorrect product query
+  else if ($result->num_rows == 0) {
+    echo "<p>Something went wrong on our end. Please try again.</p>";
+    exit;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -30,10 +58,16 @@ $password = $_SESSION['password'];
 
 
 <div class="imgcontainer">
-    <h1>Products</h1>
-<!--
-    <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
--->
+  <h1>Products</h1>
+  <?php
+    echo "<ul>";
+    while ($row = $result->fetch_assoc()) {
+      echo "<li>$row["name"], $row["price"], $row["inventory"], $row["category"]</li>";
+    }
+    echo "</ul>";
+
+    $mysqli->close();
+  ?>
 </div>
 
 </body>

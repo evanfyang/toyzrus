@@ -56,4 +56,6 @@ else {
     exit;
   }
 }
+
+$mysqli->close();
 ?>
