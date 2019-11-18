@@ -16,9 +16,9 @@ CREATE TABLE ShoppingBasket (userID INT NOT NULL, prodID INT NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID));
 
 /* Create initial users */
-INSERT INTO Users (username, password, isStaff, isManager) VALUES ('staff', 'password', TRUE, FALSE);
-INSERT INTO Users (username, password, isStaff, isManager) VALUES ('manager', 'password', TRUE, TRUE);
-INSERT INTO Users (username, password, isStaff, isManager) VALUES ('user', 'password', FALSE, FALSE);   
+INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('staff', 'password', '123 Main St.', TRUE, FALSE);
+INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('manager', 'password', '123 Main St.', TRUE, TRUE);
+INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('user', 'password', '123 Main St.', FALSE, FALSE);   
 
 /*
 Products sample data:
