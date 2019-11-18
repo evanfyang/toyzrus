@@ -64,15 +64,23 @@ else {
 
 
 <div>
+  <table>
+    <tr>
+      <th> Product Name </th>
+      <th> Price </th>
+      <th> Inventory </th>
+      <th> Category </th>
+      <th> Add Item </th>
+    </tr>
   <?php
-      echo '<table>';
-      echo '<tr>';
-      echo '<th> Product Name </th>';
-      echo '<th> Price </th>';
-      echo '<th> Inventory </th>';
-      echo '<th> Category </th>';
-      echo '<th> Add Item </th>';
-      echo '</tr>';
+      // echo '<table>';
+      // echo '<tr>';
+      // echo '<th> Product Name </th>';
+      // echo '<th> Price </th>';
+      // echo '<th> Inventory </th>';
+      // echo '<th> Category </th>';
+      // echo '<th> Add Item </th>';
+      // echo '</tr>';
       while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row["name"] . '</td>';
