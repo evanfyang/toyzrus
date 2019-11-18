@@ -59,15 +59,32 @@ else {
 
 <div class="imgcontainer">
   <h1>Products</h1>
-  <?php
-    echo "<ul>";
-    while ($row = $result->fetch_assoc()) {
-      // echo "<li>$row["name"], $row["price"], $row["inventory"], $row["category"]</li>";
-      echo "<li>" . $row["name"] . ", " . $row["price"] . ", " . $row["inventory"] . ", " . $row["category"] . "</li>";
-    }
-    echo "</ul>";
+  <img src="../assets/productslogo.png" alt="Avatar" class="avatar">
+</div>
 
-    $mysqli->close();
+
+<div>
+  <?php
+      echo '<table>';
+      echo '<tr>';
+      echo '<th> Product Name </th>';
+      echo '<th> Price </th>';
+      echo '<th> Inventory </th>';
+      echo '<th> Category </th>';
+      echo '</tr>';
+      while ($row = $result->fetch_assoc()) {
+        echo '<tr>';
+        echo '<td> $row["name"] </td>';
+        echo '<td> $row["price"] </td>';
+        echo '<td> $row["inventory"] </td>';
+        echo '<td> $row["category"] </td>';
+        echo '</tr>';
+        // echo "<li>$row["name"], $row["price"], $row["inventory"], $row["category"]</li>";
+        //echo "<li>" . $row["name"] . ", " . $row["price"] . ", " . $row["inventory"] . ", " . $row["category"] . "</li>";
+      }
+      echo '</table>';
+
+      $mysqli->close();
   ?>
 </div>
 
