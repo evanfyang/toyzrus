@@ -32,10 +32,6 @@ body {
     display: none;
 }
 
-button {
-
-}
-
 button:hover {
   opacity: 0.8;
 }
@@ -70,8 +66,7 @@ img.avatar {
 
 table {
 	border: 1px solid black; 
-	width: 100%; 
-	align="center";
+	width: 100%;
 }
 
 tr, th, td {

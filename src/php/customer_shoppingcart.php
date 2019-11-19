@@ -7,6 +7,7 @@ if(!isset($_SESSION['username']))
     exit();
 }
 
+$userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
@@ -25,19 +26,20 @@ if ($mysqli->connect_errno) {
 }
 else {
   // validate user login by querying form value
-  $query = "SELECT * FROM ShoppingBasket;"; // FIXME: choose what we want to display for each shopping cart item
+  $query = "SELECT * FROM (ShoppingBasket NATURAL JOIN Products)"; // FIXME: choose what we want to display for each shopping cart item
   $result = $mysqli->query($query);
   if (!$result) {
     echo "Query failed: " . $mysqli->error . "\n";
     exit;
   }
-  // incorrect product query
   else if ($result->num_rows == 0) {
-    //echo "<p>Something went wrong on our end. Please try again.</p>";
-    //exit;
+    echo "<p>Something went wrong on our end. Please try again.</p>";
+    exit;
+  }
+  else {
+    $row = $result->fetch_array(MYSQLI_ASSOC);
   }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +62,26 @@ else {
 <div class="imgcontainer">
     <h1>Shopping Cart</h1>
     <img src="../assets/shoppingcartlogo.png" alt="Avatar" class="avatar">
+</div>
+
+<div>
+  <?php
+      echo '<table>';
+      echo '<tr>';
+      echo '<th> Product Name </th>';
+      echo '<th> Price </th>';
+      echo '<th> Category </th>';
+      echo '</tr>';
+      while ($row = $result->fetch_assoc()) {
+        echo '<tr>';
+        echo '<td>' . $row["name"] . '</td>';
+        echo '<td>' . $row["price"] . '</td>';
+        echo '<td>' . $row["category"] . '</td>';
+		    echo '</tr>';
+      }
+	    echo '</table>';
+      $mysqli->close();
+  ?>
 </div>
 
 </body>

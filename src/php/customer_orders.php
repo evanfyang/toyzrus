@@ -59,7 +59,7 @@ else {
 
 <div class="imgcontainer">
     <h1>Orders</h1>
-    <img src="../assets/orderslogo.png" alt="Avatar" class="avatar">
+    <img src="../assets/orderslogo.jpg" alt="Avatar" class="avatar">
 </div>
 
 </body>

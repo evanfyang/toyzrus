@@ -7,6 +7,7 @@ if(!isset($_SESSION['username']))
     exit();
 }
 
+$userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
@@ -90,7 +91,10 @@ else {
 <?php echo '
 <script>
 function addToCart(productID) {
-	console.log(productID);
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "./addtocart.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(productID);
 }
 </script>' 
 ?>

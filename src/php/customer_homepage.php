@@ -7,6 +7,7 @@ if(!isset($_SESSION['username']))
     exit();
 }
 
+$userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 

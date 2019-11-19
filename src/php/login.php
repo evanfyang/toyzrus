@@ -25,6 +25,13 @@ if ($mysqli->connect_errno) {
   exit;
 }
 else {
+
+  $query = "SELECT userID FROM Users WHERE username = '$username' AND password = '$password'";
+  $result = $mysqli->query($query);
+  $row = $result->fetch_array(MYSQLI_ASSOC);
+  $userID = $row["userID"];
+  $_SESSION['userID'] = $userID;
+
   // validate user login by querying form value
   $query = "SELECT isStaff, isManager FROM Users WHERE username = '$username' AND password = '$password'";
   $result = $mysqli->query($query);
