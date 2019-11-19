@@ -57,7 +57,7 @@ else {
 
 <div class="imgcontainer">
     <h1>Shopping Cart</h1>
-    <img src="../assets/shoppingcartlogo.png" alt="Avatar" class="avatar">
+    <img src="../assets/ShoppingCartLogo.png" alt="Avatar" class="avatar">
 </div>
 
 <div>
@@ -87,6 +87,27 @@ else {
       $mysqli->close();
   ?>
 </div>
+
+<br>
+
+<?php
+
+$query = "SELECT SUM(price) as total FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID' GROUP BY userID";
+$result = $mysqli->query($query);
+if (!$result) {
+  //echo "Query failed: " . $mysqli->error . "\n";
+  //exit;
+}
+$row = $result->fetch_array(MYSQLI_ASSOC);
+$total = $row["total"];
+echo $total;
+
+?>
+
+<div style="float:right">
+<h3> Total: <?php echo $total ?> </h3> 
+</div>
+
 <script>
 function removeFromCartAlert() {
 	alert("Item removed successfully from cart!");
