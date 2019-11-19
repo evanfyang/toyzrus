@@ -26,14 +26,10 @@ if ($mysqli->connect_errno) {
 }
 else {
   // validate user login by querying form value
-  $query = "SELECT * FROM (ShoppingBasket NATURAL JOIN Products)"; // FIXME: choose what we want to display for each shopping cart item
+  $query = "SELECT * FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
   $result = $mysqli->query($query);
   if (!$result) {
     echo "Query failed: " . $mysqli->error . "\n";
-    exit;
-  }
-  else if ($result->num_rows == 0) {
-    echo "<p>Something went wrong on our end. Please try again.</p>";
     exit;
   }
   else {
@@ -66,23 +62,35 @@ else {
 
 <div>
   <?php
-      echo '<table>';
+      echo '<form action="./removefromcart.php" method="POST">';
+	  echo '<table>';
       echo '<tr>';
+	  echo '<th> Remove Item </th>';
       echo '<th> Product Name </th>';
-      echo '<th> Price </th>';
       echo '<th> Category </th>';
+      echo '<th> Price </th>';
       echo '</tr>';
-      while ($row = $result->fetch_assoc()) {
-        echo '<tr>';
-        echo '<td>' . $row["name"] . '</td>';
-        echo '<td>' . $row["price"] . '</td>';
-        echo '<td>' . $row["category"] . '</td>';
-		    echo '</tr>';
-      }
-	    echo '</table>';
+      
+	  if ($result->num_rows != 0) {
+	  	do {
+        	echo '<tr>';
+        	echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
+			echo '<td>' . $row["name"] . '</td>';
+        	echo '<td>' . $row["category"] . '</td>';
+        	echo '<td>' . $row["price"] . '</td>';
+			echo '</tr>';
+      	} while ($row = $result->fetch_array(MYSQLI_ASSOC));
+	  } 
+	  echo '</table>';
+	  echo '</form>';
+
       $mysqli->close();
   ?>
 </div>
-
+<script>
+function removeFromCartAlert() {
+	alert("Item removed successfully from cart!");
+}
+</script>
 </body>
 </html>

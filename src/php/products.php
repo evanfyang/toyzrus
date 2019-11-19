@@ -66,7 +66,8 @@ else {
 
 <div>
   <?php
-      echo '<table>';
+      echo '<form action="./addtocart.php" method="POST">';
+	  echo '<table>';
       echo '<tr>';
       echo '<th> Product Name </th>';
       echo '<th> Price </th>';
@@ -80,24 +81,18 @@ else {
         echo '<td>' . $row["price"] . '</td>';
         echo '<td>' . $row["inventory"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
-        echo '<td><center><button id="' . $row["productID"] .'" onClick="addToCart(this.id)" type="button"> Add to Cart </button></center></td>';
+        echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="addToCartAlert()"> Add to Cart </button></center></td>';
 		echo '</tr>';
       }
 	  echo '</table>';
+	  echo '</form>';
       $mysqli->close();
   ?>
 </div>
-
-<?php echo '
 <script>
-function addToCart(productID) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "./addtocart.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send(productID);
+function addToCartAlert() {
+	alert("The item was successfully added to your cart!");
 }
-</script>' 
-?>
-
+</script>
 </body>
 </html>

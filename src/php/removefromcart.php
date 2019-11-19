@@ -27,14 +27,14 @@ if ($mysqli->connect_errno) {
   exit;
 }
 else {
-  $query = "INSERT INTO ShoppingBasket (userID, prodID) VALUES ('$userID', '$productID')";
+  $query = "DELETE FROM ShoppingBasket WHERE userID = '$userID' AND prodID = '$productID'";
   $result = $mysqli->query($query);
   if (!$result) {
     echo "Query failed: " . $mysqli->error . "\n";
     exit;
   }
   else {
-    header('Location: ./products.php');
+    header('Location: ./customer_shoppingcart.php');
     exit();
   }
 }
