@@ -32,9 +32,6 @@ else {
     echo "Query failed: " . $mysqli->error . "\n";
     exit;
   }
-  else {
-    $row = $result->fetch_array(MYSQLI_ASSOC);
-  }
 }
 ?>
 
@@ -63,33 +60,31 @@ else {
 <div>
   <?php
       echo '<form action="./removefromcart.php" method="POST">';
-	  echo '<table>';
+	    echo '<table>';
       echo '<tr>';
-	  echo '<th> Remove Item </th>';
+	    echo '<th> Remove Item </th>';
       echo '<th> Product Name </th>';
       echo '<th> Category </th>';
       echo '<th> Price </th>';
       echo '</tr>';
-      
-	  if ($result->num_rows != 0) {
-	  	do {
+	  	while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         	echo '<tr>';
         	echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
-			echo '<td>' . $row["name"] . '</td>';
+			    echo '<td>' . $row["name"] . '</td>';
         	echo '<td>' . $row["category"] . '</td>';
         	echo '<td>$' . $row["price"] . '</td>';
-			echo '</tr>';
-      	} while ($row = $result->fetch_array(MYSQLI_ASSOC));
-	  } 
+			    echo '</tr>';
+      }
 	  echo '</table>';
 	  echo '</form>';
-
   ?>
 </div>
 
 <script>
 function removeFromCartAlert() {
-	alert("Item removed successfully from cart!");
+  if (confirm("Are you sure you want to remove this item from your cart?")) {
+    alert("Item removed successfully from cart!");
+  }
 }
 </script>
 
@@ -119,6 +114,18 @@ else {
 $mysqli->close();
 
 ?>
+
+<br?>
+
+<button type="button" onclick="addToOrder()" class="primarybtn"> Click Here to Order! </button>
+
+<script>
+function addToOrder() {
+  if (confirm("Are you sure you want to place this order?")) {
+    <?php header("Location: ./customer_orders.php"); ?>
+  }
+}
+</script>
 
 </body>
 </html>

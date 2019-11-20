@@ -25,16 +25,11 @@ if ($mysqli->connect_errno) {
 }
 else {
   // validate user login by querying form value
-  $query = "SELECT * FROM Orders;"; // FIXME: choose what we want to display for each order
+  $query = "SELECT * FROM (SELECT orderID, prodID FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID'";
   $result = $mysqli->query($query);
   if (!$result) {
     echo "Query failed: " . $mysqli->error . "\n";
     exit;
-  }
-  // incorrect product query
-  else if ($result->num_rows == 0) {
-    //echo "<p>Something went wrong on our end. Please try again.</p>";
-    //exit;
   }
 }
 
@@ -56,10 +51,32 @@ else {
   <a href="customer_shoppingcart.php">Shopping Cart</a>
 </div>
 
-
 <div class="imgcontainer">
     <h1>Orders</h1>
     <img src="../assets/orderslogo.png" alt="Avatar" class="avatar">
+</div>
+
+<div>
+  <?php
+      echo '<form action="./removefromcart.php" method="POST">';
+	    echo '<table>';
+      echo '<tr>';
+      echo '<th> Order ID </th>';
+      echo '<th> Product Name </th>';
+      echo '<th> Category </th>';
+      echo '<th> Price </th>';
+      echo '</tr>';
+	  	while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        	echo '<tr>';
+          echo '<td>' . $row["orderID"] . '</td>';
+			    echo '<td>' . $row["name"] . '</td>';
+        	echo '<td>' . $row["category"] . '</td>';
+        	echo '<td>$' . $row["price"] . '</td>';
+			    echo '</tr>';
+    }
+	  echo '</table>';
+	  echo '</form>';
+  ?>
 </div>
 
 </body>
