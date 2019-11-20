@@ -10,6 +10,7 @@ if(!isset($_SESSION['username']))
 $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
+$cartIsEmpty = TRUE;
 
 // connect to mysql
 $host = "localhost";
@@ -22,15 +23,15 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 if ($mysqli->connect_errno) {
   echo "Could not connect to database \n";
   echo "Error: ". $mysqli->connect_error . "\n";
-  exit;
+  exit();
 }
 else {
   // validate user login by querying form value
   $query = "SELECT * FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
   $result = $mysqli->query($query);
   if (!$result) {
-    echo "Query failed: " . $mysqli->error . "\n";
-    exit;
+	echo "Query failed: " . $mysqli->error . "\n";
+    exit();
   }
 }
 ?>
@@ -68,6 +69,7 @@ else {
       echo '<th> Price </th>';
       echo '</tr>';
 	  	while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$cartIsEmpty = FALSE;
         	echo '<tr>';
         	echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
 			    echo '<td>' . $row["name"] . '</td>';
@@ -82,9 +84,7 @@ else {
 
 <script>
 function removeFromCartAlert() {
-  if (confirm("Are you sure you want to remove this item from your cart?")) {
     alert("Item removed successfully from cart!");
-  }
 }
 </script>
 
@@ -115,14 +115,18 @@ $mysqli->close();
 
 ?>
 
-<br?>
+<br><br><br><br><br>
 
-<button type="button" onclick="addToOrder()" class="primarybtn"> Click Here to Order! </button>
+<center><button type="button" onclick="addToOrder()" class="primarybtn"> Click Here to Order! </button></center>
 
 <script>
 function addToOrder() {
-  if (confirm("Are you sure you want to place this order?")) {
-    <?php header("Location: ./customer_orders.php"); ?>
+  var cartIsEmpty = "<?php echo $cartIsEmpty; ?>";
+  if (cartIsEmpty) {
+	alert("Your shopping cart is empty!");
+  }
+  else if (confirm("Are you sure you want to place this order?")) {
+   window.location="./addtoorder.php";
   }
 }
 </script>

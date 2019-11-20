@@ -50,21 +50,21 @@ else {
     // insert all products into order table
     while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
       $productID = $order["prodID"]; 
-      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, status, moneySaved, isCancelled) VALUES ('$newOrderID', $userID', '$productID', 'pending', 0, FALSE)";
+      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, status, money_saved, isCancelled) VALUES ('$newOrderID', '$userID', '$productID', 'pending', 0, FALSE)";
       $addOrderQueryResult = $mysqli->query($addOrderQuery);
       if (!$addOrderQueryResult) {
         echo "Query failed: " . $mysqli->error . "\n";
         exit();
       }  
     }
-    $removeFromShoppingCartQuery = "DELETE FROM ShoppingBasket WHERE userID = '$userID";
+    $removeFromShoppingCartQuery = "DELETE FROM ShoppingBasket WHERE userID = '$userID'";
     $result = $mysqli->query($removeFromShoppingCartQuery);
     if (!$result) {
       echo "Query failed: " . $mysqli->error . "\n";
       exit;
     }
     header('Location: ./customer_orders.php');
-    echo '<script>alert("Successfully placed order!")</script>'
+    echo '<script>alert("Successfully placed order!")</script>';
     exit();
   }
   ?>
