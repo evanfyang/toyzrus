@@ -77,35 +77,14 @@ else {
         	echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
 			echo '<td>' . $row["name"] . '</td>';
         	echo '<td>' . $row["category"] . '</td>';
-        	echo '<td>' . $row["price"] . '</td>';
+        	echo '<td>$' . $row["price"] . '</td>';
 			echo '</tr>';
       	} while ($row = $result->fetch_array(MYSQLI_ASSOC));
 	  } 
 	  echo '</table>';
 	  echo '</form>';
 
-      $mysqli->close();
   ?>
-</div>
-
-<br>
-
-<?php
-
-$query = "SELECT SUM(price) as total FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID' GROUP BY userID";
-$result = $mysqli->query($query);
-if (!$result) {
-  //echo "Query failed: " . $mysqli->error . "\n";
-  //exit;
-}
-$row = $result->fetch_array(MYSQLI_ASSOC);
-$total = $row["total"];
-echo $total;
-
-?>
-
-<div style="float:right">
-<h3> Total: <?php echo $total ?> </h3> 
 </div>
 
 <script>
@@ -113,5 +92,33 @@ function removeFromCartAlert() {
 	alert("Item removed successfully from cart!");
 }
 </script>
+
+<?php
+
+$query = "SELECT SUM(price) as total FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID' GROUP BY userID";
+$result = $mysqli->query($query);
+if (!$result) {
+  exit;
+}
+else {
+  $row = $result->fetch_array(MYSQLI_ASSOC);
+  $total = number_format($row["total"], 2, '.', '');
+  $tax = number_format($row["total"] * 0.06, 2, '.', '');
+  $subtotal = number_format($row["total"] + $row["total"] * 0.06, 2, '.', '');
+  echo '<div style="float:right; margin-right:10px; text-align:right">';  
+  echo '<div style="float:left; margin-top:0px">';
+  echo '<p style="float:right"><b> Total:&nbsp <br>Sales Tax:&nbsp <br>Subtotal:&nbsp </b></p>';
+  echo '</div>';
+  echo '<div style="float:right; margin-top:0px">';
+  echo '<p style="float:right"><b>$' . $total . '<br>';
+  echo '$' . $tax . '<br>$' . $subtotal . '</b></p>';
+  echo '</div>';
+  echo '</div>';
+}
+
+$mysqli->close();
+
+?>
+
 </body>
 </html>
