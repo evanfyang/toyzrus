@@ -28,6 +28,11 @@ body {
     color: white;
 }
 
+.topnav a.logout:hover {
+    background-color: #f44336;
+    color: black;
+}
+
 .topnav .icon {
     display: none;
 }

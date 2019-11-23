@@ -46,10 +46,16 @@ else {
 <body>
 
 <div class="topnav" id="myTopnav">
-  <a href="./customer_homepage.php">Home</a>
-  <a href="./products.php">Products</a>
-  <a href="./customer_orders.php">Orders</a>
-  <a href="customer_shoppingcart.php" class="active">Shopping Cart</a>
+  <div style="float:right">
+    <a href="./customer_homepage.php">Home</a>
+    <a href="./products.php">Products</a>
+    <a href="./customer_orders.php">Orders</a>
+    <a href="customer_shoppingcart.php" class="active">Shopping Cart</a>
+    <a href="logout.php" class="logout">Logout</a>
+  </div>
+  <div style="float:left">
+    <h2> ToyzRUs </h2>
+  </div>
 </div>
 
 
