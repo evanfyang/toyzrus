@@ -23,14 +23,10 @@ body {
     color: black;
 }
 
+
 .topnav a.active {
     background-color: #1E429A;
     color: white;
-}
-
-.topnav a.logout:hover {
-    background-color: #f44336;
-    color: black;
 }
 
 .topnav .icon {

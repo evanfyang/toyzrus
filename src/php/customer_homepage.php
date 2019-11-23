@@ -23,15 +23,15 @@ $password = $_SESSION['password'];
 <body>
 
 <div class="topnav" id="myTopnav">
-  <div style="float:left">
-    <h2> ToyzRUs </h2>
+  <div style="float:left">  
+  <p style="float:left; color:#f2f2f2; text-align: center; text-decoration: none; font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
   </div>
   <div style="float:right">
     <a href="./customer_homepage.php" class="active">Home</a>
     <a href="./products.php">Products</a>
     <a href="./customer_orders.php">Orders</a>
     <a href="customer_shoppingcart.php">Shopping Cart</a>
-    <a href="logout.php" class="logout">Logout</a>
+    <a href="logout.php">Logout</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
