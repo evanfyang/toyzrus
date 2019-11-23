@@ -46,18 +46,31 @@ else {
 <body>
 
 <div class="topnav" id="myTopnav">
+  <div style="float:left">
+    <h2> ToyzRUs </h2>
+  </div>
   <div style="float:right">
     <a href="./customer_homepage.php">Home</a>
     <a href="./products.php">Products</a>
     <a href="./customer_orders.php">Orders</a>
     <a href="customer_shoppingcart.php" class="active">Shopping Cart</a>
     <a href="logout.php" class="logout">Logout</a>
-  </div>
-  <div style="float:left">
-    <h2> ToyzRUs </h2>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
   </div>
 </div>
 
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
 
 <div class="imgcontainer">
     <h1>Shopping Cart</h1>

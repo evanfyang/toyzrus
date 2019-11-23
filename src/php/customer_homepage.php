@@ -23,15 +23,18 @@ $password = $_SESSION['password'];
 <body>
 
 <div class="topnav" id="myTopnav">
+  <div style="float:left">
+    <h2> ToyzRUs </h2>
+  </div>
   <div style="float:right">
     <a href="./customer_homepage.php" class="active">Home</a>
     <a href="./products.php">Products</a>
     <a href="./customer_orders.php">Orders</a>
     <a href="customer_shoppingcart.php">Shopping Cart</a>
     <a href="logout.php" class="logout">Logout</a>
-  </div>
-  <div style="float:left">
-    <h2> ToyzRUs </h2>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
   </div>
 </div>
 
@@ -42,5 +45,16 @@ $password = $_SESSION['password'];
         <br> above to start shopping!</p> 
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
 </div>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
 </body>
 </html>
