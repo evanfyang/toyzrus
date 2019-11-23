@@ -60,7 +60,7 @@ else {
     <a href="./products.php" class="active">Products</a>
     <a href="./customer_orders.php">Orders</a>
     <a href="customer_shoppingcart.php">Shopping Cart</a>
-    <a href="logout.php">Logout</a>
+    <a href="javascript:void(0);" onclick="logout()">Logout</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
@@ -74,6 +74,11 @@ function myFunction() {
     x.className += " responsive";
   } else {
     x.className = "topnav";
+  }
+}
+function logout() {
+    if (confirm("Are you sure you want to logout?")) {
+    window.location="./logout.php";
   }
 }
 </script>
