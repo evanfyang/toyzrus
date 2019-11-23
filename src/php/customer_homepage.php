@@ -24,7 +24,8 @@ $password = $_SESSION['password'];
 
 <div class="topnav" id="myTopnav">
   <div style="float:left">  
-  <p style="float:left; color:#f2f2f2; text-align: center; text-decoration: none; font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
+  <p style="float:left; color:#f2f2f2; text-align: center; text-decoration: none; 
+    font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
   </div>
   <div style="float:right">
     <a href="./customer_homepage.php" class="active">Home</a>
