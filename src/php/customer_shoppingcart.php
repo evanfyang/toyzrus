@@ -83,7 +83,7 @@ function myFunction() {
 	    echo '<th> Remove Item </th>';
       echo '<th> Product Name </th>';
       echo '<th> Category </th>';
-      echo '<th> Price </th>';
+      echo '<th> Unit Price </th>';
       echo '</tr>';
 	  	while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$cartIsEmpty = FALSE;
@@ -91,6 +91,7 @@ function myFunction() {
         	echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
 			    echo '<td>' . $row["name"] . '</td>';
         	echo '<td>' . $row["category"] . '</td>';
+             echo '<td><center><input type=number  name="quantity" value="' . $row["productID"] .'" type=    "submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
         	echo '<td>$' . $row["price"] . '</td>';
 			    echo '</tr>';
       }
