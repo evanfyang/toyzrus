@@ -77,26 +77,27 @@ function myFunction() {
 
 <div>
   <?php
-      echo '<form action="./removefromcart.php" method="POST">';
-	    echo '<table>';
+	  echo '<table>';
       echo '<tr>';
-	    echo '<th> Remove Item </th>';
+	  echo '<th> Remove Item </th>';
       echo '<th> Product Name </th>';
       echo '<th> Category </th>';
+	  echo '<th> Quantity </th>';
       echo '<th> Unit Price </th>';
+	  echo '<th> Price </th>';
       echo '</tr>';
 	  	while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$cartIsEmpty = FALSE;
         	echo '<tr>';
-        	echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
-			    echo '<td>' . $row["name"] . '</td>';
+        	echo '<form action="./removefromcart.php" method="POST"><td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td></form>';
+			echo '<td>' . $row["name"] . '</td>';
         	echo '<td>' . $row["category"] . '</td>';
-             echo '<td><center><input type=number  name="quantity" value="' . $row["productID"] .'" type=    "submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td>';
+            echo '<form action="./updatequantity.php" method="POST"><input type=hidden name="productID" value ="' . $row["productID"] . '" style="display:none"></input><td><center><input type=number  name="quantity" value="' . $row["quantity"] .'" style="width:3em; text-align:center" oninput=this.form.submit()></input></center></td></form>';
         	echo '<td>$' . $row["price"] . '</td>';
-			    echo '</tr>';
+			echo '<td>$' . $row["price"]*$row["quantity"] . '</td>';
+			echo '</tr>';
       }
 	  echo '</table>';
-	  echo '</form>';
   ?>
 </div>
 
