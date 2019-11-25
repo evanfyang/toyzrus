@@ -12,8 +12,8 @@ CREATE TABLE Products (productID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, name V
 CREATE TABLE Orders (orderID INT NOT NULL, userID INT NOT NULL, prodID INT NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID),
     status VARCHAR(30) NOT NULL, money_saved FLOAT NOT NULL, isCancelled BOOLEAN NOT NULL);
-CREATE TABLE ShoppingBasket (userID INT NOT NULL, prodID INT NOT NULL, 
-    FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID));
+CREATE TABLE ShoppingBasket (userID INT NOT NULL, prodID INT NOT NULL, quantity INT NOT NULL, 
+	FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID));
 
 /* Create initial users */
 INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('staff', 'password', '123 Main St.', TRUE, FALSE);

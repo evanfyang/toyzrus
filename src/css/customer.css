@@ -74,6 +74,10 @@ tr, th, td {
 	border: 1px solid black;
 }
 
+input[type="number"]{
+    width: 3px;
+}
+
 @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {

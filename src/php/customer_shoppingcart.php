@@ -6,19 +6,16 @@ if(!isset($_SESSION['username']))
     header('Location: ../../index.html');
     exit();
 }
-
 $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 $cartIsEmpty = TRUE;
-
 // connect to mysql
 $host = "localhost";
 $mysqlUser = "root";
 $mysqlPassword = "pwd";
 $mysqldb = "ecommerce";
 $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
-
 // check connection
 if ($mysqli->connect_errno) {
   echo "Could not connect to database \n";
@@ -109,7 +106,6 @@ function removeFromCartAlert() {
 </script>
 
 <?php
-
 $query = "SELECT SUM(price) as total FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID' GROUP BY userID";
 $result = $mysqli->query($query);
 if (!$result) {
@@ -130,9 +126,7 @@ else {
   echo '</div>';
   echo '</div>';
 }
-
 $mysqli->close();
-
 ?>
 
 <br><br><br><br><br>

@@ -27,15 +27,36 @@ if ($mysqli->connect_errno) {
   exit;
 }
 else {
-  $query = "INSERT INTO ShoppingBasket (userID, prodID) VALUES ('$userID', '$productID')";
+
+  $query = "SELECT * FROM ShoppingBasket WHERE userID='$userID' AND prodID='$productID'";
   $result = $mysqli->query($query);
   if (!$result) {
-    echo "Query failed: " . $mysqli->error . "\n";
-    exit;
+        echo "Query failed: " . $mysqli->error . "\n";
+        exit();
+  }
+  if (!$result->fetch_array(MYSQLI_ASSOC)) {
+    $query = "INSERT INTO ShoppingBasket (userID, prodID, quantity) VALUES ('$userID', '$productID', '1')";
+    $result = $mysqli->query($query);
+    if (!$result) {
+      echo "Query failed: " . $mysqli->error . "\n";
+      exit;
+    }
+    else {
+      header('Location: ./products.php');
+      exit();
+    }
   }
   else {
-    header('Location: ./products.php');
-    exit();
+     $query = "UPDATE ShoppingBasket SET quantity=quantity+1 WHERE userID = '$userID' AND prodID = '$productID'";
+    $result = $mysqli->query($query);
+    if (!$result) {
+      echo "Query failed: " . $mysqli->error . "\n";
+      exit;
+    }
+    else {
+      header('Location: ./products.php');
+      exit();
+    }
   }
 }
 ?>
