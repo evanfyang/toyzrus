@@ -45,7 +45,7 @@ else {
     while($row = $orderInfoQueryResults->fetch_array(MYSQLI_ASSOC)) {
       $orderIDs[] = $row["orderID"];
       $orderStatuses[] = $row["status"];
-      $orderDatetimes = ["order_datetime"];
+      $orderDatetimes[] = $row["order_datetime"];
     }
   }
 }
@@ -102,9 +102,9 @@ function logout() {
 <div>
   <?php
       for ($i = 0; $i <= sizeOf($orderIDs); $i++) {
-        echo '<p><b> Order ID: ' . $orderIDs[$i] . '</b></p><br>';
-        echo '<p><b> Order Date & Time: ' . $orderDatetimes[$i] . '</b></p><br>';
-        echo '<p><b> Order Status: ' . $orderStatuses[$i] . '</b></p><br>';
+        echo '<p><b> Order ID: ' . $orderIDs[$i] . '</b></p>';
+        echo '<p><b> Order Date & Time: ' . $orderDatetimes[$i] . '</b></p>';
+        echo '<p><b> Order Status: ' . $orderStatuses[$i] . '</b></p>';
         echo '<table>';
         echo '<tr>';
         echo '<th> Product Name </th>';

@@ -51,7 +51,7 @@ else {
     // insert all products into order table
     while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
       $productID = $order["prodID"]; 
-      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, status, money_saved, order_datetime) VALUES ('$newOrderID', '$userID', '$productID', 'pending', 0, $orderdatetime)";
+      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, status, money_saved, order_datetime) VALUES ('$newOrderID', '$userID', '$productID', 'pending', 0, NOW())";
       $addOrderQueryResult = $mysqli->query($addOrderQuery);
       if (!$addOrderQueryResult) {
         echo "Query failed: " . $mysqli->error . "\n";
