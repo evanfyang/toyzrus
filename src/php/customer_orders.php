@@ -25,13 +25,6 @@ if ($mysqli->connect_errno) {
   exit;
 }
 else {
-  // validate user login by querying form value
-  $query = "SELECT * FROM (SELECT * FROM Orders WHERE userID='$userID') AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID";
-  $result = $mysqli->query($query);
-  if (!$result) {
-    echo "Query failed: " . $mysqli->error . "\n";
-    exit;
-  }
   $orderInfoQuery = "SELECT orderID, status, order_datetime FROM Orders WHERE userID='$userID'";
   $orderInfoQueryResults = $mysqli->query($orderInfoQuery);
   if (!$orderInfoQueryResults) {
@@ -43,9 +36,11 @@ else {
     $orderStatuses = [];
     $orderDatetimes = [];
     while($row = $orderInfoQueryResults->fetch_array(MYSQLI_ASSOC)) {
-      $orderIDs[] = $row["orderID"];
-      $orderStatuses[] = $row["status"];
-      $orderDatetimes[] = $row["order_datetime"];
+      if(!in_array($row["orderID"], $orderIDs)) {
+	  	$orderIDs[] = $row["orderID"];
+      	$orderStatuses[] = $row["status"];
+      	$orderDatetimes[] = $row["order_datetime"];
+	  }
     }
   }
 }
@@ -101,7 +96,8 @@ function logout() {
 
 <div>
   <?php
-      for ($i = 0; $i <= sizeOf($orderIDs); $i++) {
+      for ($i = 0; $i <= sizeof($orderIDs); $i++) {
+		echo '<br>' . $orderIDs[$i];
         echo '<p><b> Order ID: ' . $orderIDs[$i] . '</b></p>';
         echo '<p><b> Order Date & Time: ' . $orderDatetimes[$i] . '</b></p>';
         echo '<p><b> Order Status: ' . $orderStatuses[$i] . '</b></p>';
@@ -113,6 +109,12 @@ function logout() {
         echo '<th> Each </th>';
         echo '<th> Total </th>';
         echo '</tr>';
+ 		$query = "SELECT * FROM (SELECT * FROM Orders WHERE userID='$userID' AND orderID = '$orderIDs[$i]') AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID";
+  		$result = $mysqli->query($query);
+  		if (!$result) {
+    		echo "Query failed: " . $mysqli->error . "\n";
+    		exit;
+  		}
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
           echo '<tr>';
           echo '<td>' . $row["name"] . '</td>';
@@ -123,7 +125,7 @@ function logout() {
           echo '</tr>';
         }
         echo '</table>';
-        $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID'";
+        $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND orderID = '$orderIDs[$i]'";
         $orderPriceQueryResult = $mysqli->query($orderPriceQuery);
         if (!$orderPriceQueryResult) {
           exit;
@@ -154,6 +156,7 @@ function logout() {
           echo '</div>';
           echo '</div>';
         }
+		echo "imhere";
       }
       $mysqli->close();
   ?>
