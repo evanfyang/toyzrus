@@ -32,6 +32,22 @@ else {
     echo "Query failed: " . $mysqli->error . "\n";
     exit;
   }
+  $orderInfoQuery = "SELECT orderID, status, order_datetime FROM Orders WHERE userID='$userID'";
+  $orderInfoQueryResults = $mysqli->query($orderInfoQuery);
+  if (!$orderInfoQueryResults) {
+    echo "Query failed: " . $mysqli->error . "\n";
+    exit;
+  }
+  else {
+    $orderIDs = [];
+    $orderStatuses = [];
+    $orderDatetimes = [];
+    while($row = $orderInfoQueryResults->fetch_array(MYSQLI_ASSOC)) {
+      $orderIDs[] = $row["orderID"];
+      $orderStatuses[] = $row["status"];
+      $orderDatetimes = ["order_datetime"];
+    }
+  }
 }
 
 ?>
@@ -85,26 +101,61 @@ function logout() {
 
 <div>
   <?php
-      echo '<form action="./removefromcart.php" method="POST">';
-	  echo '<table>';
-      echo '<tr>';
-      echo '<th> Order ID </th>';
-	  echo '<th> Order Status </th>';
-      echo '<th> Product Name </th>';
-      echo '<th> Category </th>';
-      echo '<th> Price </th>';
-      echo '</tr>';
-	  	while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        	echo '<tr>';
-          	echo '<td>' . $row["orderID"] . '</td>';
-		 	echo '<td>' . $row["status"] . '</td>';
-			echo '<td>' . $row["name"] . '</td>';
-        	echo '<td>' . $row["category"] . '</td>';
-        	echo '<td>$' . $row["price"] . '</td>';
-			echo '</tr>';
-    }
-	  echo '</table>';
-	  echo '</form>';
+      for ($i = 0; $i <= sizeOf($orderIDs); $i++) {
+        echo '<p><b> Order ID: ' . $orderIDs[$i] . '</b></p><br>';
+        echo '<p><b> Order Date & Time: ' . $orderDatetimes[$i] . '</b></p><br>';
+        echo '<p><b> Order Status: ' . $orderStatuses[$i] . '</b></p><br>';
+        echo '<table>';
+        echo '<tr>';
+        echo '<th> Product Name </th>';
+        echo '<th> Category </th>';
+        echo '<th> Quantity </th>';
+        echo '<th> Each </th>';
+        echo '<th> Total </th>';
+        echo '</tr>';
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+          echo '<tr>';
+          echo '<td>' . $row["name"] . '</td>';
+          echo '<td>' . $row["category"] . '</td>';
+          echo '<td>' . $row["quantity"] . '</td>';
+          echo '<td>' . $row["price"] . '</td>';
+          echo '<td>$' . $row["quantity"] * $row["price"] . '</td>';
+          echo '</tr>';
+        }
+        echo '</table>';
+        $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID'";
+        $orderPriceQueryResult = $mysqli->query($orderPriceQuery);
+        if (!$orderPriceQueryResult) {
+          exit;
+        }
+        else {
+          $true_prices = [];
+          $prices = [];
+          $quantities = [];
+          while($row = $orderPriceQueryResult->fetch_array(MYSQLI_ASSOC)) {
+            $prices[] = $row["price"];
+            $quantities[] = $row["quantity"];
+          }
+          $true_total = 0;
+          for ($i = 0; $i <= sizeOf($prices); $i++) {
+             $true_prices[] = $prices[$i] * $quantities[$i];
+             $true_total += $true_prices[$i];
+          }
+          $total = number_format($true_total, 2, '.', '');
+          $tax = number_format($true_total * 0.06, 2, '.', '');
+          $subtotal = number_format($true_total + $true_total * 0.06, 2, '.', '');
+          echo '<div style="float:right; margin-right:10px; text-align:right">';  
+          echo '<div style="float:left; margin-top:0px">';
+          echo '<p style="float:right"><b> Total:&nbsp <br>Sales Tax:&nbsp <br>Subtotal:&nbsp </b></p>';
+          echo '</div>';
+          echo '<div style="float:right; margin-top:0px">';
+          echo '<p style="float:right"><b>$' . $total . '<br>';
+          echo '$' . $tax . '<br>$' . $subtotal . '</b></p>';
+          echo '</div>';
+          echo '</div>';
+        }
+      }
+      $mysqli->close();
   ?>
 </div>
 

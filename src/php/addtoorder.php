@@ -10,6 +10,7 @@ if(!isset($_SESSION['username']))
 $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
+$order_datetime = date("Y-m-d H:i:s");
 
 // connect to mysql
 $host = "localhost";
@@ -50,7 +51,7 @@ else {
     // insert all products into order table
     while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
       $productID = $order["prodID"]; 
-      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, status, money_saved, isCancelled) VALUES ('$newOrderID', '$userID', '$productID', 'pending', 0, FALSE)";
+      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, status, money_saved, order_datetime) VALUES ('$newOrderID', '$userID', '$productID', 'pending', 0, $orderdatetime)";
       $addOrderQueryResult = $mysqli->query($addOrderQuery);
       if (!$addOrderQueryResult) {
         echo "Query failed: " . $mysqli->error . "\n";
