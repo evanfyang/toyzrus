@@ -108,16 +108,27 @@ function removeFromCartAlert() {
 </script>
 
 <?php
-$query = "SELECT SUM(price) as total FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID' GROUP BY userID";
+$query = "SELECT price, quantity FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
 $result = $mysqli->query($query);
 if (!$result) {
   exit;
 }
 else {
-  $row = $result->fetch_array(MYSQLI_ASSOC);
-  $total = number_format($row["total"], 2, '.', '');
-  $tax = number_format($row["total"] * 0.06, 2, '.', '');
-  $subtotal = number_format($row["total"] + $row["total"] * 0.06, 2, '.', '');
+  $true_prices = [];
+  $prices = [];
+  $quantities = [];
+  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    $prices[] = $row["price"];
+    $quantities[] = $row["quantity"];
+  }
+  $true_total = 0;
+  for ($i = 0; $i <= sizeOf($prices); $i++) {
+     $true_prices[] = $prices[$i] * $quantities[$i];
+     $true_total += $true_prices[$i];
+  }
+  $total = number_format($true_total, 2, '.', '');
+  $tax = number_format($true_total * 0.06, 2, '.', '');
+  $subtotal = number_format($true_total + $true_total * 0.06, 2, '.', '');
   echo '<div style="float:right; margin-right:10px; text-align:right">';  
   echo '<div style="float:left; margin-top:0px">';
   echo '<p style="float:right"><b> Total:&nbsp <br>Sales Tax:&nbsp <br>Subtotal:&nbsp </b></p>';
