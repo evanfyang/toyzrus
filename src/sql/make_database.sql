@@ -60,3 +60,16 @@ INSERT INTO Products (name, price, inventory, category) VALUES ('Walkie Talkies'
 INSERT INTO Products (name, price, inventory, category) VALUES ('Mini Trampoline', 63.00, 6, 'outdoors');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Scooter', 39.99, 14, 'outdoors');
 INSERT INTO Products (name, price, inventory, category) VALUES ('Outdoor Playset', 1399.99, 2, 'outdoors');
+
+/* Sample orders to test customer order page */
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773477, 3, 1, 1, 'Pending', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773477, 3, 2, 2, 'Pending', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773477, 3, 3, 3, 'Pending', 0, '2019-10-31 13:00:00');
+
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 4, 4, 'Shipped', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 5, 5, 'Shipped', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 6, 6, 'Shipped', 0, '2019-10-31 13:00:00');
+
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 7, 7, 'Canceled', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 8, 8, 'Canceled', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 9, 9, 'Canceled', 0, '2019-10-31 13:00:00');

@@ -124,7 +124,15 @@ function logout() {
         echo '</table>';
 		echo '<div style="float:left; text-align:left">';
         echo '<p><b> Order ID: ' . $orderIDs[$i] . '<br>';
-        echo 'Order Status: ' . $orderStatuses[$i] . '<br>';
+		if ($orderStatuses[$i] == "Canceled") {
+			echo 'Order Status: <mark style="background-color:#F44336">' . $orderStatuses[$i] . '</mark><br>';
+		}
+        else if ($orderStatuses[$i] == "Shipped") {
+			echo 'Order Status: <mark style="background-color:#4F7FE4">' . $orderStatuses[$i] . '</mark><br>';
+		}
+		else  /*($orderStatuses[$i] == "Pending")*/ {
+			echo 'Order Status: <mark style="background-color:#FFE158">' . $orderStatuses[$i] . '</mark><br>';
+		}
         echo 'Order Placed On: ' . $orderDatetimes[$i] . '</b></p>';
 		echo '</div>';
 		$orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND orderID='$orderIDs[$i]'";
@@ -158,10 +166,21 @@ function logout() {
           echo '</div>';
           echo '</div>';
 		  echo '<br><br><br><br><br>';
-		  echo '<center><button type="button" onclick="cancelOrder()" class="secondarybtn"> Cancel Order ' . $orderIDs[$i] . '</button></center>';
-        }
+		  if ($orderStatuses[$i] == "Pending") {
+			echo '<form action="cancelorder.php" method="POST" onsubmit="return confirm(\'Are you sure you want to cancel order ' . $orderIDs[$i] . '? Once you cancel an order, it cannot be undone!\');"><center><button type="submit" name="orderID" value="' . $orderIDs[$i] . '"class="secondarybtn"> Cancel Order ' . $orderIDs[$i] . '</button></center></form>';
+ 
+		  }
+	   }
 	}
   ?>
+
+<script>
+function cancelOrder() {
+	if (confirm("Are you sure you want to place this order?")) {
+   		window.location="./cancelorder.php";
+  	}
+}
+</script>
 </div>
 
 </body>
