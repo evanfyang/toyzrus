@@ -96,11 +96,8 @@ function logout() {
 
 <div>
   <?php
-      for ($i = 0; $i <= sizeof($orderIDs); $i++) {
-		echo '<br>' . $orderIDs[$i];
-        echo '<p><b> Order ID: ' . $orderIDs[$i] . '</b></p>';
-        echo '<p><b> Order Date & Time: ' . $orderDatetimes[$i] . '</b></p>';
-        echo '<p><b> Order Status: ' . $orderStatuses[$i] . '</b></p>';
+	for ($i = 0; $i < sizeOf($orderIDs); $i++) {
+		echo '<br><br>';
         echo '<table>';
         echo '<tr>';
         echo '<th> Product Name </th>';
@@ -109,7 +106,7 @@ function logout() {
         echo '<th> Each </th>';
         echo '<th> Total </th>';
         echo '</tr>';
- 		$query = "SELECT * FROM (SELECT * FROM Orders WHERE userID='$userID' AND orderID = '$orderIDs[$i]') AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID";
+		$query = "SELECT * FROM (SELECT * FROM Orders WHERE userID='$userID' AND orderID='$orderIDs[$i]') AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID";
   		$result = $mysqli->query($query);
   		if (!$result) {
     		echo "Query failed: " . $mysqli->error . "\n";
@@ -125,7 +122,12 @@ function logout() {
           echo '</tr>';
         }
         echo '</table>';
-        $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND orderID = '$orderIDs[$i]'";
+		echo '<div style="float:left; text-align:left">';
+        echo '<p><b> Order ID: ' . $orderIDs[$i] . '<br>';
+        echo 'Order Status: ' . $orderStatuses[$i] . '<br>';
+        echo 'Order Placed On: ' . $orderDatetimes[$i] . '</b></p>';
+		echo '</div>';
+		$orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND orderID='$orderIDs[$i]'";
         $orderPriceQueryResult = $mysqli->query($orderPriceQuery);
         if (!$orderPriceQueryResult) {
           exit;
@@ -134,13 +136,13 @@ function logout() {
           $true_prices = [];
           $prices = [];
           $quantities = [];
-          while($row = $orderPriceQueryResult->fetch_array(MYSQLI_ASSOC)) {
-            $prices[] = $row["price"];
-            $quantities[] = $row["quantity"];
+          while($orderInfo = $orderPriceQueryResult->fetch_array(MYSQLI_ASSOC)) {
+            $prices[] = $orderInfo["price"];
+            $quantities[] = $orderInfo["quantity"];
           }
           $true_total = 0;
-          for ($i = 0; $i <= sizeOf($prices); $i++) {
-             $true_prices[] = $prices[$i] * $quantities[$i];
+          for ($j = 0; $j <= sizeOf($prices); $j++) {
+             $true_prices[] = $prices[$j] * $quantities[$j];
              $true_total += $true_prices[$i];
           }
           $total = number_format($true_total, 2, '.', '');
@@ -155,10 +157,10 @@ function logout() {
           echo '$' . $tax . '<br>$' . $subtotal . '</b></p>';
           echo '</div>';
           echo '</div>';
+		  echo '<br><br><br><br><br>';
+		  echo '<center><button type="button" onclick="cancelOrder()" class="secondarybtn"> Cancel Order ' . $orderIDs[$i] . '</button></center>';
         }
-		echo "imhere";
-      }
-      $mysqli->close();
+	}
   ?>
 </div>
 

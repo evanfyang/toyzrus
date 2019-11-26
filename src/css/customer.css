@@ -61,7 +61,7 @@ button:hover {
 }
 
 img.avatar {
-    width: 25%;
+    max-width: 250px;
     border-radius: 0%;
 }
 
