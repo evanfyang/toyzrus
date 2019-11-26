@@ -151,7 +151,7 @@ function logout() {
         $true_total = 0;
         for ($j = 0; $j <= sizeOf($prices); $j++) {
           $true_prices[] = $prices[$j] * $quantities[$j];
-          $true_total += $true_prices[$i];
+          $true_total += $true_prices[$j];
         }
         $total = number_format($true_total, 2, '.', '');
         $tax = number_format($true_total * 0.06, 2, '.', '');

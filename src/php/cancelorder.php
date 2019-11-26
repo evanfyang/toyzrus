@@ -49,6 +49,7 @@ else {
       		echo "Query failed: " . $mysqli->error . "\n";
       		exit();
     	}
+		// restock items that were canceled in order.
     	header('Location: ./customer_orders.php');
     	echo '<script>alert("Successfully canceled order ' . $orderID . '!")</script>';
     	exit();

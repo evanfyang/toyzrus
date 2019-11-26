@@ -97,14 +97,26 @@ function logout() {
       echo '<th> Product Name </th>';      
       echo '<th> Category </th>';
 	  echo '<th> Price </th>';
-      echo '<th> Add Item </th>';
+	  echo '<th> Stock </th>';
+      echo '<th> Action </th>';
       echo '</tr>';
       while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
 		echo '<td>$' . $row["price"] . '</td>';
-        echo '<td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="addToCartAlert()"> Add to Cart </button></center></td>';
+		if ($row["inventory"] == 0) {
+			echo '<td><center><mark style="background-color:#F44336">Out of Stock</mark></center></td>';
+			echo '<td><center><button name="id" value="' . $row["productID"] .'" type="sub    mit" onclick="addToCartAlert()" disabled> Add to Cart </button></center></td>';
+		}
+		else if ($row["inventory"] <= 5) {
+			echo '<td><center><mark style="background-color:#FFE158">Low Stock</mark></center></td>';
+			echo '<td><center><button name="id" value="' . $row["productID"] .'" type="sub    mit" onclick="addToCartAlert()"> Add to Cart </button></center></td>';
+		}
+		else {
+			echo '<td><center><mark style="background-color:#4F7FE4">In Stock</mark></center></td>';
+			echo '<td><center><button name="id" value="' . $row["productID"] .'" type="sub    mit" onclick="addToCartAlert()"> Add to Cart </button></center></td>';
+		}
 		echo '</tr>';
       }
 	  echo '</table>';

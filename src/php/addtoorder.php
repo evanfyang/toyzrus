@@ -50,19 +50,32 @@ else {
     // insert all products into order table
     while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
       $productID = $order["prodID"];
-      $quantity = $order["quantity"]; 
-      $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES ('$newOrderID', '$userID', '$productID', '$quantity', 'Pending', 0, NOW())";
-      $addOrderQueryResult = $mysqli->query($addOrderQuery);
-      if (!$addOrderQueryResult) {
-        echo "Query failed: " . $mysqli->error . "\n";
-        exit();
-      }
-      $updateProductQuantitiyQuery = "UPDATE Products SET quantity = quantity - '$quantity' WHERE prodID = '$productID' AND quantity >= '$quantity'";  
-      $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantitiyQuery);
+      $quantity = $order["quantity"];
+	  $updateProductQuantityQuery = "UPDATE Products SET inventory = inventory - '$quantity' WHERE productID = '$productID' AND inventory >= '$quantity' AND inventory > 0";
+      $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantityQuery);
       if (!$updateProductQuantityQueryResult) {
         echo "Query failed: " . $mysqli->error . "\n";
         exit();
       }
+	  else if ($mysqli->affected_rows==0) {
+		$productNameQuery = "SELECT name FROM Products WHERE productID='$productID'";
+		$productNameQueryResult = $mysqli->query($productNameQuery);
+		if (!$productNameQueryResult) {
+			echo "Query failed: " . $mysqli->error . "\n";
+			exit();
+		}
+		$product = $productNameQueryResult->fetch_array(MYSQLI_ASSOC);
+    	echo '<script>alert("Unable to order the specified quantity for the product \'' . $product["name"] . '\'. Please reduce the quantity or wait for the item to restock."); window.location.href="./customer_shoppingcart.php";</script>';
+    	exit();
+	  }
+	  else { 
+      	$addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES ('$newOrderID', '$userID', '$productID', '$quantity', 'Pending', 0, NOW())";
+      	$addOrderQueryResult = $mysqli->query($addOrderQuery);
+      	if (!$addOrderQueryResult) {
+        	echo "Query failed: " . $mysqli->error . "\n";
+        	exit();
+      	}
+	  }
     }
     $removeFromShoppingCartQuery = "DELETE FROM ShoppingBasket WHERE userID = '$userID'";
     $result = $mysqli->query($removeFromShoppingCartQuery);

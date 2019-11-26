@@ -92,7 +92,7 @@ function myFunction() {
         echo '<form action="./removefromcart.php" method="POST"><td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td></form>';
 			  echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
-        echo '<form action="./updatequantity.php" method="POST"><input type=hidden name="productID" value ="' . $row["productID"] . '" style="display:none"></input><td><center><input type=number  name="quantity" value="' . $row["quantity"] .'" style="width:3em; text-align:center" oninput=this.form.submit()></input></center></td></form>';
+        echo '<form action="./updatequantity.php" method="POST"><input type=hidden name="productID" value ="' . $row["productID"] . '" style="display:none"></input><td><center><input type=number  name="quantity" value="' . $row["quantity"] .'" style="width:3em; text-align:center" onchange=this.form.submit()></input></center></td></form>';
         echo '<td>$' . $row["price"] . '</td>';
 			  echo '<td>$' . $row["price"]*$row["quantity"] . '</td>';
 			  echo '</tr>';
