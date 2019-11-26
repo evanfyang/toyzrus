@@ -56,7 +56,13 @@ else {
       if (!$addOrderQueryResult) {
         echo "Query failed: " . $mysqli->error . "\n";
         exit();
-      }  
+      }
+      $updateProductQuantitiyQuery = "UPDATE Products SET quantity = quantity - '$quantity' WHERE prodID = '$productID' AND quantity >= '$quantity'";  
+      $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantitiyQuery);
+      if (!$updateProductQuantityQueryResult) {
+        echo "Query failed: " . $mysqli->error . "\n";
+        exit();
+      }
     }
     $removeFromShoppingCartQuery = "DELETE FROM ShoppingBasket WHERE userID = '$userID'";
     $result = $mysqli->query($removeFromShoppingCartQuery);
