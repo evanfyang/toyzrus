@@ -7,7 +7,7 @@ CREATE DATABASE ecommerce;
 USE ecommerce;
 
 /* database tables */
-CREATE TABLE Users (userID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, username VARCHAR(40) NOT NULL, password VARCHAR(40) NOT NULL, address VARCHAR(80) NOT NULL, isStaff BOOLEAN NOT NULL, isManager BOOLEAN NOT NULL); 
+CREATE TABLE Users (userID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, username VARCHAR(40) NOT NULL, password VARCHAR(40) NOT NULL, firstname VARCHAR(40) NOT NULL, lastname VARCHAR(40) NOT NULL, isStaff BOOLEAN NOT NULL, isManager BOOLEAN NOT NULL); 
 CREATE TABLE Products (productID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, name VARCHAR(40) NOT NULL, price FLOAT NOT NULL, inventory INT NOT NULL, category VARCHAR(30) NOT NULL);
 CREATE TABLE Orders (orderID INT NOT NULL, userID INT NOT NULL, prodID INT NOT NULL, quantity INT NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID),
@@ -16,11 +16,11 @@ CREATE TABLE ShoppingBasket (userID INT NOT NULL, prodID INT NOT NULL, quantity 
 	FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID));
 
 /* Create initial users */
-INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('staff', 'password', '123 Main St.', TRUE, FALSE);
-INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('manager', 'password', '123 Main St.', TRUE, TRUE);
-INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('user', 'password', '123 Main St.', FALSE, FALSE); 
+INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('staff', 'password', 'Staff', 'Personnel', TRUE, FALSE);
+INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('manager', 'password', 'Store', 'Manager', TRUE, TRUE);
+INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('user', 'password', 'Test', 'User', FALSE, FALSE); 
 /* professor access */
-INSERT INTO Users (username, password, address, isStaff, isManager) VALUES ('cs405', 'cs405', '123 Main St.', FALSE, FALSE); 
+INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('cs405', 'cs405', 'Dr.', 'Liu', FALSE, FALSE); 
 
 /*
 Products sample data:
@@ -66,10 +66,10 @@ INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, orde
 INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773477, 3, 2, 2, 'Pending', 0, '2019-10-31 13:00:00');
 INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773477, 3, 3, 3, 'Pending', 0, '2019-10-31 13:00:00');
 
-INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 4, 4, 'Shipped', 0, '2019-10-31 13:00:00');
-INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 5, 5, 'Shipped', 0, '2019-10-31 13:00:00');
-INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 6, 6, 'Shipped', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 4, 4, 'Shipped', 0, '2019-10-31 12:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 5, 5, 'Shipped', 0, '2019-10-31 12:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773478, 3, 6, 6, 'Shipped', 0, '2019-10-31 12:00:00');
 
-INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 7, 7, 'Canceled', 0, '2019-10-31 13:00:00');
-INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 8, 8, 'Canceled', 0, '2019-10-31 13:00:00');
-INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 9, 9, 'Canceled', 0, '2019-10-31 13:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 7, 7, 'Canceled', 0, '2019-10-31 11:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 8, 8, 'Canceled', 0, '2019-10-31 11:00:00');
+INSERT INTO Orders (orderID, userID, prodID, quantity, status, money_saved, order_datetime) VALUES (1421773479, 3, 9, 9, 'Canceled', 0, '2019-10-31 11:00:00');

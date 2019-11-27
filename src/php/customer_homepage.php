@@ -11,6 +11,32 @@ $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
+$host = "localhost";
+$mysqlUser = "root";
+$mysqlPassword = "pwd";
+$mysqldb = "ecommerce";
+$mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
+
+// check connection
+if ($mysqli->connect_errno) {
+	echo "Could not connect to database \n";
+	echo "Error: ". $mysqli->connect_error . "\n";
+	exit();
+}
+else {
+	$query = "SELECT firstname, lastname FROM Users WHERE userID='$userID'";
+	$result = $mysqli->query($query);
+	if (!$result) {
+		echo "Query failed: " . $mysqli->error . "\n";
+    	exit();
+	}
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$firstname = $row["firstname"];
+	$lastname = $row["lastname"];
+
+	$_SESSION['firstname'] = $firstname;
+	$_SESSION['lastname'] = $lastname;
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +67,7 @@ $password = $_SESSION['password'];
 
 <div class="imgcontainer">
     <h1>ToyzRUs Homepage</h1>
-    <h2>Welcome, <?php echo "$username"?>!</h2>
+    <h2>Welcome, <?php echo $firstname . " " . $lastname ?>!</h2>
     <p> Please select one of the links  
         <br> above to start shopping!</p> 
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">

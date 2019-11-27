@@ -2,7 +2,8 @@
 // extract POST variables from form submission
 $username = $_POST["username"];
 $password = $_POST["password"];
-$address = $_POST["address"];
+$firstname = $_POST["firstname"];
+$lastname = $_POST["lastname"];
 
 // connect to mysql
 $host = "localhost";
@@ -42,18 +43,18 @@ else {
         //     }
         // }
         // insert new user
-        $insertUser = "INSERT INTO Users(username,password,address,isStaff,isManager) VALUES('$username','$password','$address',FALSE,FALSE)";
+        $insertUser = "INSERT INTO Users(username,password,firstname,lastname,isStaff,isManager) VALUES('$username','$password','$firstname','$lastname',FALSE,FALSE)";
         $result = $mysqli->query($insertUser);
         if (!$result) {
-            echo "<p>Registration failed: " . $mysqli->error . "</p>\n";
+            echo "<script> alert(\"Registration failed: " . $mysqli->error . ". Please try again later. Click 'OK' to return to registration page.\"); window.location.href='../html/registration.html' </script>";
             exit;
         }
         else {
-            echo "<p>Registration Successful.</p>";
+            echo "<script> alert(\"Registration successful! Click 'OK' to return to login page.\"); window.location.href='../../index.html' </script>";
         }
     }
     else {
-        echo "<p> Username already exists. Please choose another username. </p>";
+        echo "<script> alert(\"The username " . $username . " already exists! Please choose another username.\"); window.location.href='../html/registration.html' </script>";
         // go back to registration
         //header("Location: /url/to/the/other/page");
     }

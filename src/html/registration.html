@@ -19,18 +19,37 @@
     <label for="username"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="username" id="username" required>
 
+	<label for="firstname"><b>First Name</b></label>
+    <input type="text" placeholder="Enter First Name" name="firstname" id="firstname" required>
+	
+	<label for="lastname"><b>Last Name</b></label>
+    <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname" required>
+
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" id="password" required>
+       
+	<label for="confirmpassword"><b>Confirm Password</b></label>
+    <input type="password" placeholder="Confirm Password" name="confirmpassword" id="confirmpassword" required>
 
-    <label for="address"><b>Address</b></label>
-    <input type="text" placeholder="Enter Home Address" name="address" id="address" required>
-        
-    <button type="submit">Register!</button>
+    <button type="submit" onclick="return confirmPassword()">Register!</button>
     <button type="button" onclick="go_to_login()" class="secondarybtn"> Go Back to Login </button>
   </div>
 </form>
 
 <script>
+
+function confirmPassword() {
+	var password = document.getElementById('password').value;
+	var confirmpassword = document.getElementById('confirmpassword').value;
+	if (password == confirmpassword) {
+		return true;
+	}
+	else {
+		document.getElementById('confirmpassword').style.borderColor = "red";
+		alert("Your passwords do not match. Please ensure that your password fields match.");
+		return false;
+	}
+}
 
 function go_to_login() {
     window.location.href = '../../index.html';

@@ -49,7 +49,22 @@ else {
       		echo "Query failed: " . $mysqli->error . "\n";
       		exit();
     	}
-		// restock items that were canceled in order.
+		$query = "SELECT prodID, quantity FROM Orders WHERE orderID='$orderID'";
+		$result = $mysqli->query($query);
+        if (!$result) {
+            echo "Query failed: " . $mysqli->error . "\n";
+            exit();
+        }
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$productID = $row["prodID"];
+			$quantity = $row["quantity"];
+			$cancelOrderRestockQuery = "UPDATE Products SET inventory=inventory+'$quantity' WHERE productID='$productID'";
+			$cancelOrderRestockQueryResult = $mysqli->query($cancelOrderRestockQuery);
+            if (!$cancelOrderRestockQueryResult) {
+                echo "Query failed: " . $mysqli->error . "\n";
+                exit();
+            }
+		}
     	header('Location: ./customer_orders.php');
     	echo '<script>alert("Successfully canceled order ' . $orderID . '!")</script>';
     	exit();

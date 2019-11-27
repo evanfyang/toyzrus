@@ -34,7 +34,7 @@ button:hover {
 }
 
 img.avatar {
-  width: 25%;
+  max-width: 150px;
   border-radius: 0%;
 }
 

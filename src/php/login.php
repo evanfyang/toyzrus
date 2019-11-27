@@ -42,9 +42,7 @@ else {
   }
   // incorrect username or password
   else if ($result->num_rows == 0) {
-    echo "<p>Login failed. Retry or register to continue.</p>";
-    // go back to login button
-    //header("Location: /url/to/the/other/page");
+    echo "<script> alert('Login failed: incorrect username or password. Please try again or register as a new user. Click \'OK\' to return to the login page.'); window.location.href='../../index.html'</script>";
   }
   // user is staff
   else if ($row["isStaff"] && !$row["isManager"]){

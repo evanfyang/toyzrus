@@ -25,7 +25,7 @@ if ($mysqli->connect_errno) {
   exit;
 }
 else {
-  $orderInfoQuery = "SELECT orderID, status, order_datetime FROM Orders WHERE userID='$userID'";
+  $orderInfoQuery = "SELECT orderID, status, order_datetime FROM Orders WHERE userID='$userID' ORDER BY order_datetime DESC";
   $orderInfoQueryResults = $mysqli->query($orderInfoQuery);
   if (!$orderInfoQueryResults) {
     echo "Query failed: " . $mysqli->error . "\n";
@@ -96,6 +96,9 @@ function logout() {
 
 <div>
   <?php
+	if (sizeOf($orderIDs) == 0) {
+		echo '<center><h3 style="color:red"> No Orders to Display... <h3></center>';
+	}
 	for ($i = 0; $i < sizeOf($orderIDs); $i++) {
 		  echo '<br><br>';
       echo '<table>';
@@ -165,11 +168,14 @@ function logout() {
         echo '$' . $tax . '<br>$' . $subtotal . '</b></p>';
         echo '</div>';
         echo '</div>';
-		    echo '<br><br><br><br><br>';
-		    if ($orderStatuses[$i] == "Pending") {
-			    echo '<form action="cancelorder.php" method="POST" onsubmit="return confirm(\'Are you sure you want to cancel order ' . $orderIDs[$i] . '? Once you cancel an order, it cannot be undone!\');"><center><button type="submit" name="orderID" value="' . $orderIDs[$i] . '"class="secondarybtn"> Cancel Order ' . $orderIDs[$i] . '</button></center></form>';
-		    }
-	   }
+		echo '<br><br><br><br><br>';
+		$order_datetime = strtotime($orderDatetimes[$i]);
+		$now = time();
+		$days_between = floor(abs($now - $order_datetime) / 86400);
+		if ($orderStatuses[$i] == "Pending" and $days_between < 1) {
+			echo '<form action="cancelorder.php" method="POST" onsubmit="return confirm(\'Are you sure you want to cancel order ' . $orderIDs[$i] . '? Once you cancel an order, it cannot be undone!\');"><center><button type="submit" name="orderID" value="' . $orderIDs[$i] . '"class="secondarybtn"> Cancel Order ' . $orderIDs[$i] . '</button></center></form>';
+		}
+	  }
 	}
 ?>
 
