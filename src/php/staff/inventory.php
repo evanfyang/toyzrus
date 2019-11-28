@@ -56,8 +56,8 @@ else {
         font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
     </div>
     <div style="float:right">
-        <a href="./homepage.php" class="active">Home</a>
-        <a href="./inventory.php">Inventory</a>
+        <a href="./homepage.php">Home</a>
+        <a href="./inventory.php" class="active">Inventory</a>
         <a href="./orders.php">Orders</a>
         <a href="javascript:void(0);" onclick="logout()">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -84,21 +84,31 @@ function logout() {
 </script>
 
 <div class="imgcontainer">
-    <h1>Inventory</h1>
+    <h1>Manage Inventory</h1>
     <img src="../../assets/staffinventorylogo.png" alt="Avatar" class="avatar">
+	<br>
 </div>
+
+<center><button type="button" onclick="addInventory()" class="primarybtn"> Add New Product </button></center>
+
+<br>
+
+<script>
+function addInventory() {
+	window.location="./addinventory.php";
+}
+</script>
 
 <div>
 <?php
     // Display table header
-    echo '<form action="./addtocart.php" method="POST">';
     echo '<table>';
     echo '<tr>';
     echo '<th> Product Name </th>';      
     echo '<th> Category </th>';
     echo '<th> Price </th>';
     echo '<th> Stock </th>';
-    echo '<th> Inventory </th>';
+    echo '<th> Quantity </th>';
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
@@ -125,13 +135,12 @@ function logout() {
         echo '<form action="./updateinventory.php" method="POST"><input ';
         echo 'type=hidden name="productID" value ="' . $row["productID"] . '" ';
         echo 'style="display:none"></input><td><center><input type=number ';
-        echo 'name="quantity" value="' . $row["quantity"] .'" style="width:3em; ';
+        echo 'name="quantity" value="' . $row["inventory"] .'" style="width:3em; ';
         echo 'text-align:center" onchange=this.form.submit()></input></center>';
         echo '</td></form>';
         echo '</tr>';
     }
     echo '</table>';
-    echo '</form>';
     $mysqli->close();
 ?>
 </div>

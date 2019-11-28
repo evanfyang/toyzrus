@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../../index.html');
+	header('Location: ../../../index.html');
     exit();
 }
 
