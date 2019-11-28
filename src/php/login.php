@@ -53,7 +53,7 @@ else {
     // user is staff
     else if ($row["isStaff"] && !$row["isManager"]) {
         // login successful, go to manager page
-        header("Location: ./manager/homepage.php");
+        header("Location: ./staff/homepage.php");
         exit;
     }
     // user is manager
