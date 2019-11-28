@@ -1,11 +1,6 @@
 <?php
 // start session
 session_start();
-if(!isset($_SESSION['username'])) {
-    // not logged in
-    header('Location: ../../index.html');
-    exit();
-}
 
 // extract POST variables from form submission
 $username = $_POST["username"];
