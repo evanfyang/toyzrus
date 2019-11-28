@@ -127,6 +127,7 @@ function logout() {
             echo '<th> Product Name </th>';
             echo '<th> Category </th>';
             echo '<th> Quantity </th>';
+            echo '<th> Discount </th>';
             echo '<th> Each </th>';
             echo '<th> Total </th>';
             echo '</tr>';
@@ -146,8 +147,9 @@ function logout() {
                 echo '<td>' . $row["name"] . '</td>';
                 echo '<td>' . $row["category"] . '</td>';
                 echo '<td>' . $row["quantity"] . '</td>';
+                echo '<td style="color:red">$' . $row["price"]*($row["promotions"] / 100) . '</td>';
                 echo '<td>$' . $row["price"] . '</td>';
-                echo '<td>$' . $row["quantity"] * $row["price"] . '</td>';
+                echo '<td>$' . ($row["price"]-($row["price"]*($row["promotions"] / 100)))*$row["quantity"] . '</td>';
                 echo '</tr>';
             }
             echo '</table>';
@@ -169,10 +171,10 @@ function logout() {
             echo 'Order Placed On: ' . $orderDatetimes[$i] . '</b></p>';
             echo '</div>';
             // Get prices and quantities for products in an order
-            $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) 
-                AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON 
-                AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND 
-                orderID='$orderIDs[$i]'";
+            $orderPriceQuery = "SELECT price, quantity, promotions FROM 
+                (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) 
+                AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE 
+                userID='$userID' AND orderID='$orderIDs[$i]'";
             $orderPriceQueryResult = $mysqli->query($orderPriceQuery);
             if (!$orderPriceQueryResult) {
                 echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
@@ -183,14 +185,16 @@ function logout() {
                 $true_prices = [];
                 $prices = [];
                 $quantities = [];
+                $promotions = [];
                 while($orderInfo = $orderPriceQueryResult->fetch_array(MYSQLI_ASSOC)) {
                     $prices[] = $orderInfo["price"];
                     $quantities[] = $orderInfo["quantity"];
+                    $promotions[] = $orderInfo["promotions"];
                 }
                 // Calculate total price, tax and subtotal for an order
                 $true_total = 0;
                 for ($j = 0; $j <= sizeOf($prices); $j++) {
-                    $true_prices[] = $prices[$j] * $quantities[$j];
+                    $true_prices[] = ($prices[$j] - ($prices[$j]*($promotions[$j] / 100))) * $quantities[$j];
                     $true_total += $true_prices[$j];
                 }
                 $total = number_format($true_total, 2, '.', '');

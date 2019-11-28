@@ -94,6 +94,7 @@ function myFunction() {
     echo '<th> Product Name </th>';
     echo '<th> Category </th>';
     echo '<th> Quantity </th>';
+    echo '<th> Discount </th>';
     echo '<th> Each </th>';
     echo '<th> Total </th>';
     echo '</tr>';
@@ -115,8 +116,9 @@ function myFunction() {
         echo 'name="quantity" value="' . $row["quantity"] .'" style="width:3em; ';
         echo 'text-align:center" onchange=this.form.submit()></input></center>';
         echo '</td></form>';
+        echo '<td style="color:red">$' . $row["price"]*($row["promotions"] / 100) . '</td>';
         echo '<td>$' . $row["price"] . '</td>';
-        echo '<td>$' . $row["price"]*$row["quantity"] . '</td>';
+        echo '<td>$' . ($row["price"]-($row["price"]*($row["promotions"] / 100)))*$row["quantity"] . '</td>';
         echo '</tr>';
     }
     echo '</table>';
@@ -131,8 +133,8 @@ function removeFromCartAlert() {
 
 <?php
     // Get price and quantity for each product in shopping cart
-    $query = "SELECT price, quantity FROM (SELECT * FROM ShoppingBasket) AS 
-        ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON 
+    $query = "SELECT price, quantity, promotions FROM (SELECT * FROM ShoppingBasket) 
+        AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON 
         ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -145,13 +147,15 @@ function removeFromCartAlert() {
         $true_prices = [];
         $prices = [];
         $quantities = [];
+        $promotions = [];
         while($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $prices[] = $row["price"];
             $quantities[] = $row["quantity"];
+            $promotions[] = $row["promotions"];
         }
         $true_total = 0;
         for ($i = 0; $i <= sizeOf($prices); $i++) {
-            $true_prices[] = $prices[$i] * $quantities[$i];
+            $true_prices[] = ($prices[$i] - ($prices[$i]*($promotions[$i] / 100))) * $quantities[$i];
             $true_total += $true_prices[$i];
         }
         // Display total, tax, and subtotal

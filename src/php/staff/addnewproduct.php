@@ -45,7 +45,8 @@ else {
     }
     // Check if product is in inventory. If not, add to inventory
     else if (!$result->fetch_array(MYSQLI_ASSOC)) {
-        $query = "INSERT INTO Products (name, price, inventory, category) VALUES ('$productname', '$price', '$quantity', '$category')";
+        $query = "INSERT INTO Products (name, price, inventory, category, promotions) 
+            VALUES ('$productname', '$price', '$quantity', '$category', 0)";
 		$result = $mysqli->query($query);
 		// Check if query fails
         if (!$result) {

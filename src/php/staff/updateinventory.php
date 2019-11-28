@@ -32,7 +32,7 @@ if ($mysqli->connect_errno) {
     exit;
 }
 else {
-    // Update the quantity of given product in user's shopping cart
+    // Update the quantity of given product in inventory
     $query = "UPDATE Products SET inventory = '$quantity' WHERE 
         productID = '$productID'";
     $result = $mysqli->query($query);

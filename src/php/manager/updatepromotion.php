@@ -12,9 +12,9 @@ $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
-// get product ID and product quantity from form submission
+// get product ID and product promotion from form submission
 $productID = $_POST["productID"];
-$quantity = $_POST["quantity"]; 
+$promotion = $_POST["promotion"]; 
 
 // connect to mysql
 $host = "localhost";
@@ -32,8 +32,8 @@ if ($mysqli->connect_errno) {
     exit;
 }
 else {
-    // Update the quantity of given product in inventory
-    $query = "UPDATE Products SET inventory = '$quantity' WHERE 
+    // Update the promotion of given product in inventory
+    $query = "UPDATE Products SET promotions = '$promotion' WHERE 
         productID = '$productID'";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -43,9 +43,8 @@ else {
         exit;
     }
     else {
-        header('Location: ./inventory.php');
+        header('Location: ./promotions.php');
         exit();
     }
 }
 ?>
-
