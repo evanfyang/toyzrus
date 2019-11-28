@@ -23,7 +23,6 @@ body {
     color: black;
 }
 
-
 .topnav a.active {
     background-color: #1E429A;
     color: white;
@@ -34,11 +33,11 @@ body {
 }
 
 button:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .primarybtn {
-	background-color: #1E429A;
+    background-color: #1E429A;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -48,7 +47,7 @@ button:hover {
 
 .secondarybtn {
     background-color: #f44336;
-	color: white;
+    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -66,12 +65,12 @@ img.avatar {
 }
 
 table {
-	border: 1px solid black; 
-	width: 100%;
+    border: 1px solid black; 
+    width: 100%;
 }
 
 tr, th, td {
-	border: 1px solid black;
+    border: 1px solid black;
 }
 
 input[type="number"]{

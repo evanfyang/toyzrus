@@ -1,16 +1,18 @@
 <?php
+// start session
 session_start();
-if(!isset($_SESSION['username']))
-{
+if(!isset($_SESSION['username'])) {
     // not logged in
     header('Location: ../../index.html');
     exit();
 }
 
+// get user ID, username, and password from session
 $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
+// connect to mysql
 $host = "localhost";
 $mysqlUser = "root";
 $mysqlPassword = "pwd";
@@ -19,73 +21,78 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-	echo "Could not connect to database \n";
-	echo "Error: ". $mysqli->connect_error . "\n";
-	exit();
+    echo '<script> alert("Could not connect to database';
+    echo 'Error: ' . $mysqli->connect_error . '. ';
+    echo 'Please try again another time."); '; 
+    echo 'window.location.href="../../index.html"'; 
+    exit();
 }
+// get user firstname and lastname and store in current session
 else {
-	$query = "SELECT firstname, lastname FROM Users WHERE userID='$userID'";
-	$result = $mysqli->query($query);
-	if (!$result) {
-		echo "Query failed: " . $mysqli->error . "\n";
-    	exit();
-	}
-	$row = $result->fetch_array(MYSQLI_ASSOC);
-	$firstname = $row["firstname"];
-	$lastname = $row["lastname"];
+    $query = "SELECT firstname, lastname FROM Users WHERE userID='$userID'";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
+        echo 'Please try again later. Click \'OK\' to go back."); </script>';
+        exit();
+    }
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $firstname = $row["firstname"];
+    $lastname = $row["lastname"];
 
-	$_SESSION['firstname'] = $firstname;
-	$_SESSION['lastname'] = $lastname;
+    $_SESSION['firstname'] = $firstname;
+    $_SESSION['lastname'] = $lastname;
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../css/customer.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/customer.css">
 </head>
 <body>
 
 <div class="topnav" id="myTopnav">
-  <div style="float:left">  
-  <p style="float:left; color:#f2f2f2; text-align: center; text-decoration: none; 
-    font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
-  </div>
-  <div style="float:right">
-    <a href="./customer_homepage.php" class="active">Home</a>
-    <a href="./products.php">Products</a>
-    <a href="./customer_orders.php">Orders</a>
-    <a href="customer_shoppingcart.php">Shopping Cart</a>
-    <a href="javascript:void(0);" onclick="logout()">Logout</a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
-  </div>
+    <div style="float:left">  
+        <p style="float:left; color:#f2f2f2; text-align: center; text-decoration: none; 
+        font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
+    </div>
+    <div style="float:right">
+        <a href="./customer_homepage.php" class="active">Home</a>
+        <a href="./products.php">Products</a>
+        <a href="./customer_orders.php">Orders</a>
+        <a href="customer_shoppingcart.php">Shopping Cart</a>
+        <a href="javascript:void(0);" onclick="logout()">Logout</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
 </div>
 
 <div class="imgcontainer">
     <h1>ToyzRUs Homepage</h1>
     <h2>Welcome, <?php echo $firstname . " " . $lastname ?>!</h2>
     <p> Please select one of the links  
-        <br> above to start shopping!</p> 
+    <br> above to start shopping!</p> 
     <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
 </div>
 
 <script>
 function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } 
+    else {
+        x.className = "topnav";
+    }
 }
 function logout() {
     if (confirm("Are you sure you want to logout?")) {
-    window.location="./logout.php";
-  }
+        window.location="./logout.php";
+    }
 }
 </script>
 </body>
