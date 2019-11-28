@@ -56,45 +56,17 @@ else {
     // insert all products into order table
     while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
         $productID = $order["prodID"];
-        $quantity = $order["quantity"];
-        $updateProductQuantityQuery = "UPDATE Products SET inventory = 
-            inventory - '$quantity' WHERE productID = '$productID' AND 
-            inventory >= '$quantity' AND inventory > 0";
-        $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantityQuery);
-        if (!$updateProductQuantityQueryResult) {
+        $quantity = $order["quantity"]; 
+        $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, 
+            quantity, status, money_saved, order_datetime) VALUES 
+            ('$newOrderID', '$userID', '$productID', '$quantity', 'Pending', 
+            0, NOW())";
+        $addOrderQueryResult = $mysqli->query($addOrderQuery);
+        if (!$addOrderQueryResult) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please try again later. Click 'OK' to go back.\"); "; 
             echo "window.location.href='./shoppingcart.php'; </script>";
             exit();
-        }
-        else if ($mysqli->affected_rows==0) {
-            $productNameQuery = "SELECT name FROM Products WHERE productID='$productID'";
-            $productNameQueryResult = $mysqli->query($productNameQuery);
-            if (!$productNameQueryResult) {
-                echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
-                echo "Please try again later. Click 'OK' to go back.\"); "; 
-                echo "window.location.href='./shoppingcart.php'; </script>";
-                exit();
-            }
-            $product = $productNameQueryResult->fetch_array(MYSQLI_ASSOC);
-            echo '<script>alert("Unable to order the specified quantity for ';
-            echo 'the product \'' . $product["name"] . '\'. Please reduce the ';
-            echo 'quantity or wait for the item to restock."); ';
-            echo 'window.location.href="./shoppingcart.php";</script>';
-            exit();
-        }
-        else { 
-            $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, 
-                quantity, status, money_saved, order_datetime) VALUES 
-                ('$newOrderID', '$userID', '$productID', '$quantity', 'Pending', 
-                0, NOW())";
-            $addOrderQueryResult = $mysqli->query($addOrderQuery);
-            if (!$addOrderQueryResult) {
-                echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
-                echo "Please try again later. Click 'OK' to go back.\"); "; 
-                echo "window.location.href='./shoppingcart.php'; </script>";
-                exit();
-            }
         }
     }
     // Remove items added to order from shopping cart

@@ -31,18 +31,157 @@ if ($mysqli->connect_errno) {
     exit();
 }
 else {
-    // update order status to 'Shipped'
-    $query = "UPDATE Orders SET status='Shipped' WHERE orderID='$orderID'";
-    $result = $mysqli->query($query);
-    if (!$result) {
+    // get all products associated with a particular orderID
+    $shoppingCartQuery = "SELECT * FROM Orders WHERE orderID = '$orderID'";
+    $shoppingCartQueryResult = $mysqli->query($shoppingCartQuery);
+    if (!$shoppingCartQueryResult) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='./orders.php'; </script>";
+        echo "window.location.href='./shoppingcart.php'; </script>";
         exit();
     }
-    // Go back to orders page
-    header('Location: ./orders.php');
-    echo '<script>alert("Successfully shipped order ' . $orderID . '!")</script>';
-    exit();
+    $lowStock = false;
+    $lowStockProductIDs = [];
+    $lowStockProductName = [];
+    $lowStockProductPrice = [];
+    $lowStockProductQuantity = [];
+    $lowStockProductCategory = [];
+    while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
+        $productID = $order["prodID"];
+        $quantity = $order["quantity"];
+        // Check if a product has enough stock to ship
+        $checkProductQuantityQuery = "SELECT * FROM Products WHERE 
+            productID = '$productID' AND inventory >= '$quantity' AND 
+            inventory > 0";
+        $checkProductQuantityQueryResult = $mysqli->query($checkProductQuantityQuery);
+        // Check if query failed
+        if (!$checkProductQuantityQueryResult) {
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            echo "window.location.href='./shoppingcart.php'; </script>";
+            exit();
+        }
+        // Not enough of a particular product to ship
+        else if ($mysqli->affected_rows==0) {
+            $lowStock = true;
+            // Get all information on low stock product
+            $productNameQuery = "SELECT * FROM Products WHERE productID='$productID'";
+            $productNameQueryResult = $mysqli->query($productNameQuery);
+            // Check if query failed
+            if (!$productNameQueryResult) {
+                echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+                echo "Please try again later. Click 'OK' to go back.\"); "; 
+                echo "window.location.href='./shoppingcart.php'; </script>";
+                exit();
+            }
+            // Store information about product with low stock
+            $product = $productNameQueryResult->fetch_array(MYSQLI_ASSOC);
+            $lowStockProductIDs[] = $product["productID"];
+            $lowStockProductName[] = $product["name"];
+            $lowStockProductPrice[] = $product["price"];
+            $lowStockProductQuantity[] = $product["inventory"];
+            $lowStockProductCategory[] = $product["category"];
+            exit();
+        }
+    }
+    if($lowstock) {
+        echo '
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" type="text/css" href="../../css/customer.css">
+        </head>
+        <body>
+        <div class="topnav" id="myTopnav">
+            <div style="float:left">  
+                <p style="float:left; color:#f2f2f2; text-align: center; text-decoration: none; 
+                font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
+            </div>
+            <div style="float:right">
+                <a href="./homepage.php">Home</a>
+                <a href="./products.php">Products</a>
+                <a href="./orders.php" class="active">Orders</a>
+                <a href="./shoppingcart.php">Shopping Cart</a>
+                <a href="javascript:void(0);" onclick="logout()">Logout</a>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } 
+            else {
+                x.className = "topnav";
+            }
+        }
+        function logout() {
+            if (confirm("Are you sure you want to logout?")) {
+                window.location="../logout.php";
+            }
+        }
+        </script>
+        <div class="imgcontainer">
+            <h1 style="color:red">Error Shipping Order</h1>
+            <h3> The following items listed in <br> the table below are low in stock. </h3>
+            <img src="../../assets/orderslogo.png" alt="Avatar" class="avatar">
+        </div>
+        <div>';
+        // Display each order in tabular format
+        // Table headers
+        echo '<br><br>';
+        echo '<table>';
+        echo '<tr>';
+        echo '<th> Product ID </th>';
+        echo '<th> Product Name </th>';
+        echo '<th> Category </th>';
+        echo '<th> Price </th>';
+        echo '<th> Quantity </th>';
+        echo '</tr>';
+        for ($i = 0; $i < sizeOf($lowStockProductIDs); $i++) {
+            echo '<tr>';
+            echo '<td>' . $lowStockProductIDs[$i] . '</td>';
+            echo '<td>' . $lowStockProductName[$i] . '</td>';
+            echo '<td>' . $lowStockProductCategory[$i] . '</td>';
+            echo '<td>$' . $lowStockProductPrice[$i] . '</td>';
+            echo '<td>' . $lowStockProductQuantity[$i] . '</td>';
+            echo '</tr>';
+            echo '</table>';
+        }
+        echo '<br><br>';
+        echo '<button type="button" onclick="';
+        echo 'javascript:window.location.href=\'./inventory.php\'" ';
+        echo 'class="secondarybtn"> Go Back to Login </button>';
+    }
+    else {
+        // update order status to 'Shipped'
+        $query = "UPDATE Orders SET status='Shipped' WHERE orderID='$orderID'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            echo "window.location.href='./orders.php'; </script>";
+            exit();
+        }
+        $updateProductQuantityQuery = "UPDATE Products SET inventory = 
+            inventory - '$quantity' WHERE productID = '$productID' AND 
+            inventory >= '$quantity' AND inventory > 0";
+        $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantityQuery);
+        if (!$updateProductQuantityQueryResult) {
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            echo "window.location.href='./shoppingcart.php'; </script>";
+            exit();
+        }
+        // Go back to orders page
+        header('Location: ./orders.php');
+        echo '<script>alert("Successfully shipped order ' . $orderID . '!")</script>';
+        exit();
+    }
 }
 ?>
