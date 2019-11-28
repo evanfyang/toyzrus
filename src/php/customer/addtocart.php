@@ -23,10 +23,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); ';
-    echo 'window.location.href="./shoppingcart.php"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='./shoppingcart.php' </script>"; 
     exit;
 }
 else {
@@ -35,9 +35,9 @@ else {
     $result = $mysqli->query($query);
     // Check if query fails
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./shoppingcart.php </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='./shoppingcart.php' </script>";
         exit();
     }
     // Check if item is already in cart. If not, add to cart.
@@ -47,9 +47,9 @@ else {
         $result = $mysqli->query($query);
         // Check if query fails
         if (!$result) {
-            echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-            echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./shoppingcart.php </script>';
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            echo "window.location.href='./shoppingcart.php' </script>";
             exit;
         }
         // Go back to product page
@@ -65,9 +65,9 @@ else {
         $result = $mysqli->query($query);
         // Check if query fails
         if (!$result) {
-            echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-            echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./shoppingcart.php </script>';
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            echo "window.location.href='./shoppingcart.php' </script>";
             exit;
         }
         // Go back to products page

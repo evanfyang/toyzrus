@@ -20,10 +20,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); '; 
-    echo 'window.location.href="./homepage.php"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='./homepage.php' </script>"; 
     exit;
 }
 else {
@@ -32,8 +32,8 @@ else {
         userID='$userID' ORDER BY order_datetime DESC";
     $orderInfoQueryResults = $mysqli->query($orderInfoQuery);
     if (!$orderInfoQueryResults) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back."); </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); </script>"; 
         exit;
     }
     else {
@@ -125,8 +125,8 @@ function logout() {
             AllProducts ON AllOrders.prodID = AllProducts.productID";
         $result = $mysqli->query($query);
         if (!$result) {
-            echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-            echo 'Please try again later. Click \'OK\' to go back."); </script>';
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); </script>"; 
             exit;
         }
         // Table row data
@@ -164,8 +164,8 @@ function logout() {
             orderID='$orderIDs[$i]'";
         $orderPriceQueryResult = $mysqli->query($orderPriceQuery);
         if (!$orderPriceQueryResult) {
-            echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-            echo 'Please try again later. Click \'OK\' to go back."); </script>';  
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); </script>"; 
             exit;
         }
         else {

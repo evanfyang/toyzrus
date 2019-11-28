@@ -23,10 +23,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); '; 
-    echo 'window.location.href="./shoppingcart.php"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='./shoppingcart.php' </script>"; 
     exit;
 }
 else {
@@ -34,9 +34,9 @@ else {
     $query = "DELETE FROM ShoppingBasket WHERE userID = '$userID' AND prodID = '$productID'";
     $result = $mysqli->query($query);
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./shoppingcart.php </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='./shoppingcart.php' </script>";
         exit;
     }
     else {

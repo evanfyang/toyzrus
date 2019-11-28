@@ -19,10 +19,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); '; 
-    echo 'window.location.href="../../index.html"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='../../../index.html' </script>"; 
     exit;
 }
 else {
@@ -38,16 +38,16 @@ else {
     $result = $mysqli->query($query);
     $row = $result->fetch_array(MYSQLI_ASSOC);
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");';
-        echo 'window.location.href=../../index.html </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='../../index.html' </script>";
         exit;
     }
     // incorrect username or password
     else if ($result->num_rows == 0) {
-        echo "<script> alert('Login failed: incorrect username or password. ";
+        echo "<script> alert(\"Login failed: incorrect username or password. ";
         echo "Please try again or register as a new user. ";
-        echo "Click \'OK\' to return to the login page.'); ";
+        echo "Click 'OK' to return to the login page.\"); ";
         echo "window.location.href='../../index.html'</script>";
     }
     // user is staff

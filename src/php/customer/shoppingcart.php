@@ -22,10 +22,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); '; 
-    echo 'window.location.href="./homepage.php"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='./homepage.php' </script>"; 
     exit();
 }
 else {
@@ -35,8 +35,8 @@ else {
         AllProducts.productID WHERE userID='$userID'";
     $result = $mysqli->query($query);
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back."); </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); </script>";
         exit();
     }
 }
@@ -136,8 +136,8 @@ function removeFromCartAlert() {
         ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
     $result = $mysqli->query($query);
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back."); </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); </script>";
         exit;
     }
     // Calculate total price, tax, and subtotal for products in shopping cart

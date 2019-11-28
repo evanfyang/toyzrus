@@ -20,10 +20,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); ';
-    echo 'window.location.href="./shoppingcart.php"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='./shoppingcart.php' </script>"; 
     exit();
 }
 else {
@@ -32,9 +32,9 @@ else {
     $orderIDQueryResult = $mysqli->query($orderIDQuery);
     $orderIDs = $orderIDQueryResult->fetch_array(MYSQLI_ASSOC);
     if (!$orderIDQueryResult) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./shoppingcart.php </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='./shoppingcart.php' </script>";
         exit();
     }
     $uniqueID = false;
@@ -48,9 +48,9 @@ else {
     $shoppingCartQuery = "SELECT * FROM ShoppingBasket WHERE userID = '$userID'";
     $shoppingCartQueryResult = $mysqli->query($shoppingCartQuery);
     if (!$shoppingCartQueryResult) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./shoppingcart.php </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='./shoppingcart.php' </script>";
         exit();
     }
     // insert all products into order table
@@ -62,18 +62,18 @@ else {
             inventory >= '$quantity' AND inventory > 0";
         $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantityQuery);
         if (!$updateProductQuantityQueryResult) {
-            echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-            echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./shoppingcart.php </script>';
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            echo "window.location.href='./shoppingcart.php' </script>";
             exit();
         }
         else if ($mysqli->affected_rows==0) {
             $productNameQuery = "SELECT name FROM Products WHERE productID='$productID'";
             $productNameQueryResult = $mysqli->query($productNameQuery);
             if (!$productNameQueryResult) {
-                echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-                echo 'Please try again later. Click \'OK\' to go back.");'; 
-                echo 'window.location.href=./shoppingcart.php </script>';
+                echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+                echo "Please try again later. Click 'OK' to go back.\"); "; 
+                echo "window.location.href='./shoppingcart.php' </script>";
                 exit();
             }
             $product = $productNameQueryResult->fetch_array(MYSQLI_ASSOC);
@@ -90,9 +90,9 @@ else {
                 0, NOW())";
             $addOrderQueryResult = $mysqli->query($addOrderQuery);
             if (!$addOrderQueryResult) {
-                echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-                echo 'Please try again later. Click \'OK\' to go back.");'; 
-                echo 'window.location.href=./shoppingcart.php </script>';
+                echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+                echo "Please try again later. Click 'OK' to go back.\"); "; 
+                echo "window.location.href='./shoppingcart.php' </script>";
                 exit();
             }
         }
@@ -101,9 +101,9 @@ else {
     $removeFromShoppingCartQuery = "DELETE FROM ShoppingBasket WHERE userID = '$userID'";
     $result = $mysqli->query($removeFromShoppingCartQuery);
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./shoppingcart.php </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='./shoppingcart.php' </script>";
         exit;
     }
     header('Location: ./orders.php');

@@ -26,10 +26,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); ';
-    echo 'window.location.href="./shoppingcart.php"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='./addinventoryform.php' </script>"; 
     exit;
 }
 else {
@@ -38,9 +38,9 @@ else {
     $result = $mysqli->query($query);
     // Check if query fails
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./shoppingcart.php </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); "; 
+        echo "window.location.href='./addinventoryform.php' </script>";
         exit();
     }
     // Check if product is in inventory. If not, add to inventory
@@ -52,7 +52,7 @@ else {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please ensure that your field values are in the correct form ";
 			echo "and try again. Click 'OK' to go back.\"); "; 
-            echo "window.location.href=./addinventory.php </script>";
+            echo "window.location.href=./addinventoryform.php </script>";
             exit;
         }
         // Go back to inventory page

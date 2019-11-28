@@ -21,10 +21,10 @@ $mysqli = new mysqli($host, $mysqlUser, $mysqlPassword, $mysqldb);
 
 // check connection
 if ($mysqli->connect_errno) {
-    echo '<script> alert("Could not connect to database';
-    echo 'Error: ' . $mysqli->connect_error . '. ';
-    echo 'Please try again another time."); '; 
-    echo 'window.location.href="../../../index.html"'; 
+    echo "<script> alert(\"Could not connect to database";
+    echo "Error: " . $mysqli->connect_error . ". ";
+    echo "Please try again another time. Click 'OK' to go back.\"); ";
+    echo "window.location.href='../../../index.html' </script>"; 
     exit();
 }
 // get user firstname and lastname and store in current session
@@ -32,8 +32,8 @@ else {
     $query = "SELECT firstname, lastname FROM Users WHERE userID='$userID'";
     $result = $mysqli->query($query);
     if (!$result) {
-        echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
-        echo 'Please try again later. Click \'OK\' to go back."); </script>';
+        echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        echo "Please try again later. Click 'OK' to go back.\"); </script>"; 
         exit();
     }
     $row = $result->fetch_array(MYSQLI_ASSOC);
