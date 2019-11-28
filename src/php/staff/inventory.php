@@ -138,11 +138,27 @@ function addInventory() {
         echo 'text-align:center" onchange=this.form.submit()></input></center>';
         echo '</td></form>';
         echo '</tr>';
+        // button to allow removal of product from cart
+        echo '<form action="./removefrominventory.php" method="POST"><td><center>'; 
+        echo '<button name="id" value="' . $row["productID"] .'" type="submit" ';
+        echo 'onclick="return removeFromInventoryAlert()"> Remove </button>';
+        echo '</center></td></form>';
     }
     echo '</table>';
     $mysqli->close();
 ?>
 </div>
+
+<script>
+function removeFromCartAlert() {
+    if (confirm("Are you sure you want to remove this item from inventory?")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+</script>
 
 </body>
 </html>

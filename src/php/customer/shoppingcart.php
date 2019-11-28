@@ -101,7 +101,7 @@ function myFunction() {
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $cartIsEmpty = FALSE;
         echo '<tr>';
-        // add button to allow removal of product from cart
+        // button to allow removal of product from cart
         echo '<form action="./removefromcart.php" method="POST"><td><center>'; 
         echo '<button name="id" value="' . $row["productID"] .'" type="submit" ';
         echo 'onclick="removeFromCartAlert()"> Remove from Cart </button>';

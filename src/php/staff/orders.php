@@ -97,7 +97,7 @@ function logout() {
 </script>
 
 <div class="imgcontainer">
-    <h1>Orders</h1>
+    <h1>Ship Orders</h1>
     <img src="../../assets/stafforderlogo.png" alt="Avatar" class="avatar">
 </div>
 
