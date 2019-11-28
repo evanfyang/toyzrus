@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 
@@ -24,7 +24,7 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); '; 
-    echo 'window.location.href="../../index.html"'; 
+    echo 'window.location.href="../../../index.html"'; 
     exit();
 }
 // get user firstname and lastname and store in current session
@@ -50,7 +50,7 @@ else {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/customer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/customer.css">
 </head>
 <body>
 
@@ -60,10 +60,10 @@ else {
         font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
     </div>
     <div style="float:right">
-        <a href="./customer_homepage.php" class="active">Home</a>
+        <a href="./homepage.php" class="active">Home</a>
         <a href="./products.php">Products</a>
-        <a href="./customer_orders.php">Orders</a>
-        <a href="customer_shoppingcart.php">Shopping Cart</a>
+        <a href="./orders.php">Orders</a>
+        <a href="./shoppingcart.php">Shopping Cart</a>
         <a href="javascript:void(0);" onclick="logout()">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -76,7 +76,7 @@ else {
     <h2>Welcome, <?php echo $firstname . " " . $lastname ?>!</h2>
     <p> Please select one of the links  
     <br> above to start shopping!</p> 
-    <img src="../assets/homepagelogo.png" alt="Avatar" class="avatar">
+    <img src="../../assets/homepagelogo.png" alt="Avatar" class="avatar">
 </div>
 
 <script>
@@ -91,7 +91,7 @@ function myFunction() {
 }
 function logout() {
     if (confirm("Are you sure you want to logout?")) {
-        window.location="./logout.php";
+        window.location="../logout.php";
     }
 }
 </script>

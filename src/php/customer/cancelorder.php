@@ -4,7 +4,7 @@ session_start();
 if(!isset($_SESSION['username']))
 {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 // get user ID, username, and password from session
@@ -27,7 +27,7 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); ';
-    echo 'window.location.href="./customer_orders.php"'; 
+    echo 'window.location.href="./orders.php"'; 
     exit();
 }
 else {
@@ -37,7 +37,7 @@ else {
     if (!$result) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
         echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./customer_orders.php </script>';
+        echo 'window.location.href=./orders.php </script>';
         exit();
     }
     // If order was placed more than 24 hours ago, alert user that order cannot be canceled
@@ -48,7 +48,7 @@ else {
     if ($days_between >=1) {
         echo '<script>alert("Sorry, we cannot cancel order ' . $orderID . ' ';
         echo 'since it was placed more than 24 hours ago."); '; 
-        echo 'window.location="./customer_orders.php";</script>';
+        echo 'window.location="./orders.php";</script>';
         exit();
     }
     // Otherwise, update status of order to 'Canceled' and restock items
@@ -59,7 +59,7 @@ else {
         if (!$result) {
             echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
             echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./customer_orders.php </script>';
+            echo 'window.location.href=./orders.php </script>';
             exit();
         }
         $query = "SELECT prodID, quantity FROM Orders WHERE orderID='$orderID'";
@@ -67,7 +67,7 @@ else {
         if (!$result) {
             echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
             echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./customer_orders.php </script>';
+            echo 'window.location.href=./orders.php </script>';
             exit();
         }
         // Restock items
@@ -79,12 +79,12 @@ else {
             if (!$cancelOrderRestockQueryResult) {
                 echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
                 echo 'Please try again later. Click \'OK\' to go back.");'; 
-                echo 'window.location.href=./customer_orders.php </script>';
+                echo 'window.location.href=./orders.php </script>';
                 exit();
             }
         }
         // Go back to orders page
-        header('Location: ./customer_orders.php');
+        header('Location: ./orders.php');
         echo '<script>alert("Successfully canceled order ' . $orderID . '!")</script>';
         exit();
     }

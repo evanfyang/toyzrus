@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 // get user ID, username, and password from session
@@ -26,7 +26,7 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); ';
-    echo 'window.location.href="./customer_shoppingcart.php"'; 
+    echo 'window.location.href="./shoppingcart.php"'; 
     exit;
 }
 else {
@@ -37,18 +37,19 @@ else {
     if (!$result) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
         echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./customer_shoppingcart.php </script>';
+        echo 'window.location.href=./shoppingcart.php </script>';
         exit();
     }
     // Check if item is already in cart. If not, add to cart.
     if (!$result->fetch_array(MYSQLI_ASSOC)) {
-        $query = "INSERT INTO ShoppingBasket (userID, prodID, quantity) VALUES ('$userID', '$productID', '1')";
+        $query = "INSERT INTO ShoppingBasket (userID, prodID, quantity) VALUES 
+            ('$userID', '$productID', '1')";
         $result = $mysqli->query($query);
         // Check if query fails
         if (!$result) {
             echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
             echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./customer_shoppingcart.php </script>';
+            echo 'window.location.href=./shoppingcart.php </script>';
             exit;
         }
         // Go back to product page
@@ -59,13 +60,14 @@ else {
     }
     // If item is already in shopping cart, update its quantity
     else {
-        $query = "UPDATE ShoppingBasket SET quantity=quantity+1 WHERE userID = '$userID' AND prodID = '$productID'";
+        $query = "UPDATE ShoppingBasket SET quantity=quantity+1 WHERE 
+            userID = '$userID' AND prodID = '$productID'";
         $result = $mysqli->query($query);
         // Check if query fails
         if (!$result) {
             echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
             echo 'Please try again later. Click \'OK\' to go back.");'; 
-            echo 'window.location.href=./customer_shoppingcart.php </script>';
+            echo 'window.location.href=./shoppingcart.php </script>';
             exit;
         }
         // Go back to products page

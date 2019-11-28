@@ -68,7 +68,7 @@ else {
     // regular user
     else {
         // login successful, go to normal homepage
-        header("Location: ./customer_homepage.php");
+        header("Location: ./customer/homepage.php");
         exit;
     }
 }

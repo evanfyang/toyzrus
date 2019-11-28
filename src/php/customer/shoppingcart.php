@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 
@@ -25,12 +25,14 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); '; 
-    echo 'window.location.href="./customer_homepage.php"'; 
+    echo 'window.location.href="./homepage.php"'; 
     exit();
 }
 else {
     // validate user login by querying form value
-    $query = "SELECT * FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
+    $query = "SELECT * FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN 
+        (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = 
+        AllProducts.productID WHERE userID='$userID'";
     $result = $mysqli->query($query);
     if (!$result) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
@@ -45,7 +47,7 @@ else {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/customer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/customer.css">
 </head>
 <body>
 
@@ -55,10 +57,10 @@ else {
         font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
     </div>
     <div style="float:right">
-        <a href="./customer_homepage.php">Home</a>
+        <a href="./homepage.php">Home</a>
         <a href="./products.php">Products</a>
-        <a href="./customer_orders.php">Orders</a>
-        <a href="customer_shoppingcart.php" class="active">Shopping Cart</a>
+        <a href="./orders.php">Orders</a>
+        <a href="./shoppingcart.php" class="active">Shopping Cart</a>
         <a href="javascript:void(0);" onclick="logout()">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -80,7 +82,7 @@ function myFunction() {
 
 <div class="imgcontainer">
     <h1>Shopping Cart</h1>
-    <img src="../assets/ShoppingCartLogo.png" alt="Avatar" class="avatar">
+    <img src="../../assets/ShoppingCartLogo.png" alt="Avatar" class="avatar">
 </div>
 
 <div>
@@ -99,10 +101,18 @@ function myFunction() {
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $cartIsEmpty = FALSE;
         echo '<tr>';
-        echo '<form action="./removefromcart.php" method="POST"><td><center><button name="id" value="' . $row["productID"] .'" type="submit" onclick="removeFromCartAlert()"> Remove from Cart </button></center></td></form>';
+        echo '<form action="./removefromcart.php" method="POST"><td><center>'; 
+        echo '<button name="id" value="' . $row["productID"] .'" type="submit" ';
+        echo 'onclick="removeFromCartAlert()"> Remove from Cart </button>';
+        echo '</center></td></form>';
         echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
-        echo '<form action="./updatequantity.php" method="POST"><input type=hidden name="productID" value ="' . $row["productID"] . '" style="display:none"></input><td><center><input type=number  name="quantity" value="' . $row["quantity"] .'" style="width:3em; text-align:center" onchange=this.form.submit()></input></center></td></form>';
+        echo '<form action="./updatequantity.php" method="POST"><input ';
+        echo 'type=hidden name="productID" value ="' . $row["productID"] . '" ';
+        echo 'style="display:none"></input><td><center><input type=number ';
+        echo 'name="quantity" value="' . $row["quantity"] .'" style="width:3em; ';
+        echo 'text-align:center" onchange=this.form.submit()></input></center>';
+        echo '</td></form>';
         echo '<td>$' . $row["price"] . '</td>';
         echo '<td>$' . $row["price"]*$row["quantity"] . '</td>';
         echo '</tr>';
@@ -119,7 +129,9 @@ function removeFromCartAlert() {
 
 <?php
     // Get price and quantity for each product in shopping cart
-    $query = "SELECT price, quantity FROM (SELECT * FROM ShoppingBasket) AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
+    $query = "SELECT price, quantity FROM (SELECT * FROM ShoppingBasket) AS 
+        ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON 
+        ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
     $result = $mysqli->query($query);
     if (!$result) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
@@ -173,7 +185,7 @@ function addToOrder() {
 }
 function logout() {
     if (confirm("Are you sure you want to logout?")) {
-        window.location="./logout.php";
+        window.location="../logout.php";
     }
 }
 </script>

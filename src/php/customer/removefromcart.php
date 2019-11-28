@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); '; 
-    echo 'window.location.href="./customer_shoppingcart.php"'; 
+    echo 'window.location.href="./shoppingcart.php"'; 
     exit;
 }
 else {
@@ -36,11 +36,11 @@ else {
     if (!$result) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
         echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=../html/registration.html </script>';
+        echo 'window.location.href=./shoppingcart.php </script>';
         exit;
     }
     else {
-        header('Location: ./customer_shoppingcart.php');
+        header('Location: ./shoppingcart.php');
         exit();
     }
 }

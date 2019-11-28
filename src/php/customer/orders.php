@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 // get user ID, username, and password from current session
@@ -23,12 +23,13 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); '; 
-    echo 'window.location.href="./customer_homepage.php"'; 
+    echo 'window.location.href="./homepage.php"'; 
     exit;
 }
 else {
     // get all orders from a particular user 
-    $orderInfoQuery = "SELECT orderID, status, order_datetime FROM Orders WHERE userID='$userID' ORDER BY order_datetime DESC";
+    $orderInfoQuery = "SELECT orderID, status, order_datetime FROM Orders WHERE 
+        userID='$userID' ORDER BY order_datetime DESC";
     $orderInfoQueryResults = $mysqli->query($orderInfoQuery);
     if (!$orderInfoQueryResults) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
@@ -57,7 +58,7 @@ else {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/customer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/customer.css">
 </head>
 <body>
 
@@ -67,10 +68,10 @@ else {
         font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
     </div>
     <div style="float:right">
-        <a href="./customer_homepage.php">Home</a>
+        <a href="./homepage.php">Home</a>
         <a href="./products.php">Products</a>
-        <a href="./customer_orders.php" class="active">Orders</a>
-        <a href="customer_shoppingcart.php">Shopping Cart</a>
+        <a href="./orders.php" class="active">Orders</a>
+        <a href="./shoppingcart.php">Shopping Cart</a>
         <a href="javascript:void(0);" onclick="logout()">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -90,14 +91,14 @@ function myFunction() {
 }
 function logout() {
     if (confirm("Are you sure you want to logout?")) {
-        window.location="./logout.php";
+        window.location="../logout.php";
     }
 }
 </script>
 
 <div class="imgcontainer">
     <h1>Orders</h1>
-    <img src="../assets/orderslogo.png" alt="Avatar" class="avatar">
+    <img src="../../assets/orderslogo.png" alt="Avatar" class="avatar">
 </div>
 
 <div>
@@ -119,7 +120,9 @@ function logout() {
         echo '<th> Total </th>';
         echo '</tr>';
         // Get product information from a particular order that the user placed
-        $query = "SELECT * FROM (SELECT * FROM Orders WHERE userID='$userID' AND orderID='$orderIDs[$i]') AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID";
+        $query = "SELECT * FROM (SELECT * FROM Orders WHERE userID='$userID' AND 
+            orderID='$orderIDs[$i]') AS AllOrders JOIN (SELECT * FROM Products) AS 
+            AllProducts ON AllOrders.prodID = AllProducts.productID";
         $result = $mysqli->query($query);
         if (!$result) {
             echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
@@ -141,18 +144,24 @@ function logout() {
         echo '<div style="float:left; text-align:left">';
         echo '<p><b> Order ID: ' . $orderIDs[$i] . '<br>';
         if ($orderStatuses[$i] == "Canceled") {
-            echo 'Order Status: <mark style="background-color:#F44336">' . $orderStatuses[$i] . '</mark><br>';
+            echo 'Order Status: <mark style="background-color:#F44336">';
+            echo $orderStatuses[$i] . '</mark><br>';
         }
         else if ($orderStatuses[$i] == "Shipped") {
-            echo 'Order Status: <mark style="background-color:#4F7FE4">' . $orderStatuses[$i] . '</mark><br>';
+            echo 'Order Status: <mark style="background-color:#4F7FE4">';
+            echo $orderStatuses[$i] . '</mark><br>';
         }
         else  /*($orderStatuses[$i] == "Pending")*/ {
-            echo 'Order Status: <mark style="background-color:#FFE158">' . $orderStatuses[$i] . '</mark><br>';
+            echo 'Order Status: <mark style="background-color:#FFE158">';
+            echo $orderStatuses[$i] . '</mark><br>';
         }
         echo 'Order Placed On: ' . $orderDatetimes[$i] . '</b></p>';
         echo '</div>';
         // Get prices and quantities for products in an order
-        $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND orderID='$orderIDs[$i]'";
+        $orderPriceQuery = "SELECT price, quantity FROM (SELECT * FROM Orders) 
+            AS AllOrders JOIN (SELECT * FROM Products) AS AllProducts ON 
+            AllOrders.prodID = AllProducts.productID WHERE userID='$userID' AND 
+            orderID='$orderIDs[$i]'";
         $orderPriceQueryResult = $mysqli->query($orderPriceQuery);
         if (!$orderPriceQueryResult) {
             echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
@@ -193,7 +202,12 @@ function logout() {
             $now = time();
             $days_between = floor(abs($now - $order_datetime) / 86400);
             if ($orderStatuses[$i] == "Pending" and $days_between < 1) {
-                echo '<form action="cancelorder.php" method="POST" onsubmit="return confirm(\'Are you sure you want to cancel order ' . $orderIDs[$i] . '? Once you cancel an order, it cannot be undone!\');"><center><button type="submit" name="orderID" value="' . $orderIDs[$i] . '"class="secondarybtn"> Cancel Order ' . $orderIDs[$i] . '</button></center></form>';
+                echo '<form action="cancelorder.php" method="POST" onsubmit="';
+                echo 'return confirm(\'Are you sure you want to cancel order ';
+                echo $orderIDs[$i] . '? Once you cancel an order, it cannot be ';
+                echo 'undone!\');"><center><button type="submit" name="orderID" ';
+                echo 'value="' . $orderIDs[$i] . '"class="secondarybtn"> Cancel ';
+                echo 'Order ' . $orderIDs[$i] . '</button></center></form>';
             }
         }
     }

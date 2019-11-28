@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['username'])) {
     // not logged in
-    header('Location: ../../index.html');
+    header('Location: ../../../index.html');
     exit();
 }
 
@@ -24,7 +24,7 @@ if ($mysqli->connect_errno) {
     echo '<script> alert("Could not connect to database';
     echo 'Error: ' . $mysqli->connect_error . '. ';
     echo 'Please try again another time."); '; 
-    echo 'window.location.href="./customer_homepage.php"'; 
+    echo 'window.location.href="./homepage.php"'; 
     exit;
 }
 else {
@@ -34,7 +34,7 @@ else {
     if (!$result) {
         echo '<script> alert("Query failed: ' . $mysqli->error . '. ';
         echo 'Please try again later. Click \'OK\' to go back.");'; 
-        echo 'window.location.href=./customer_homepage.php </script>';
+        echo 'window.location.href=./homepage.php </script>';
         exit;
     }
 }
@@ -45,7 +45,7 @@ else {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/customer.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/customer.css" />
 </head>
 <body>
 
@@ -55,10 +55,10 @@ else {
         font-size: 17px; margin-left:10px; margin-bottom:0px"> ToyzRUs </p>
     </div>
     <div style="float:right">
-        <a href="./customer_homepage.php">Home</a>
+        <a href="./homepage.php">Home</a>
         <a href="./products.php" class="active">Products</a>
-        <a href="./customer_orders.php">Orders</a>
-        <a href="customer_shoppingcart.php">Shopping Cart</a>
+        <a href="./orders.php">Orders</a>
+        <a href="./shoppingcart.php">Shopping Cart</a>
         <a href="javascript:void(0);" onclick="logout()">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -78,14 +78,14 @@ function myFunction() {
 }
 function logout() {
     if (confirm("Are you sure you want to logout?")) {
-        window.location="./logout.php";
+        window.location="../logout.php";
     }
 }
 </script>
 
 <div class="imgcontainer">
     <h1>Products</h1>
-    <img src="../assets/ProductsLogo.png" alt="Avatar" class="avatar">
+    <img src="../../assets/ProductsLogo.png" alt="Avatar" class="avatar">
 </div>
 
 <div>
