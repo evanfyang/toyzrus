@@ -127,7 +127,7 @@ else {
         <div class="imgcontainer">
             <h1 style="color:red">Unable to Ship <br> Order
 				<?php echo $orderID; ?></h1>
-			 <img src="../../assets/stafforderlogocantship.png" alt="Avatar" class="avatar">
+			 <img src="../../assets/staffordercantshiplogo.png" alt="Avatar" class="avatar">
             <h4> The following items listed in the <br> table below are low in stock and <br> must be restocked before shipping. </h4>
         </div>
         <div>
@@ -137,7 +137,7 @@ else {
         echo '<br>';
         echo '<table>';
         echo '<tr>';
-        echo '<th> Product ID </th>';
+        //echo '<th> Product ID </th>';
         echo '<th> Product Name </th>';
         echo '<th> Category </th>';
         echo '<th> Price </th>';
@@ -145,7 +145,7 @@ else {
         echo '</tr>';
         for ($i = 0; $i < sizeOf($lowStockProductIDs); $i++) {
             echo '<tr>';
-            echo '<td>' . $lowStockProductIDs[$i] . '</td>';
+            //echo '<td>' . $lowStockProductIDs[$i] . '</td>';
             echo '<td>' . $lowStockProductName[$i] . '</td>';
             echo '<td>' . $lowStockProductCategory[$i] . '</td>';
             echo '<td>$' . $lowStockProductPrice[$i] . '</td>';

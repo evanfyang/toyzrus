@@ -110,7 +110,7 @@ function logout() {
     else {
         // Filter by order status
         echo '<h3 style="margin-bottom:5px"> Filter Orders By Status: </h3>';
-        echo '<table style="width:350px">';
+        echo '<table style="width:300px">';
         echo '<tr>';
         echo '<td><input type="radio" name="status" value="All" checked> All </td>';
         echo '<td><input type="radio" name="status" value="Pending"> Pending </td>';
