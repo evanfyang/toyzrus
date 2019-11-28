@@ -101,7 +101,9 @@ else {
             <div style="float:right">
                 <a href="./homepage.php">Home</a>
                 <a href="./inventory.php">Inventory</a>
+                <a href="./promotions.php">Promotions</a>
                 <a href="./orders.php" class="active">Orders</a>
+                <a href="./statistics.php">Statistics</a>
                 <a href="javascript:void(0);" onclick="logout()">Logout</a>
                 <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                     <i class="fa fa-bars"></i>
