@@ -26,7 +26,7 @@ if ($mysqli->connect_errno) {
     echo "<script> alert(\"Could not connect to database";
     echo "Error: " . $mysqli->connect_error . ". ";
     echo "Please try again another time. Click 'OK' to go back.\"); ";
-    echo "window.location.href='./shoppingcart.php' </script>"; 
+    echo "window.location.href='./shoppingcart.php'; </script>"; 
     exit;
 }
 else {
@@ -37,7 +37,7 @@ else {
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='./shoppingcart.php' </script>";
+        echo "window.location.href='./shoppingcart.php'; </script>";
         exit();
     }
     // Check if item is already in cart. If not, add to cart.
@@ -49,7 +49,7 @@ else {
         if (!$result) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='./shoppingcart.php' </script>";
+            echo "window.location.href='./shoppingcart.php'; </script>";
             exit;
         }
         // Go back to product page
@@ -67,7 +67,7 @@ else {
         if (!$result) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='./shoppingcart.php' </script>";
+            echo "window.location.href='./shoppingcart.php'; </script>";
             exit;
         }
         // Go back to products page

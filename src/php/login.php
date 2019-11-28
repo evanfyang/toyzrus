@@ -22,7 +22,7 @@ if ($mysqli->connect_errno) {
     echo "<script> alert(\"Could not connect to database";
     echo "Error: " . $mysqli->connect_error . ". ";
     echo "Please try again another time. Click 'OK' to go back.\"); ";
-    echo "window.location.href='../../../index.html' </script>"; 
+    echo "window.location.href='../../../index.html'; </script>"; 
     exit;
 }
 else {
@@ -40,7 +40,7 @@ else {
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='../../index.html' </script>";
+        echo "window.location.href='../../index.html'; </script>";
         exit;
     }
     // incorrect username or password
@@ -48,7 +48,7 @@ else {
         echo "<script> alert(\"Login failed: incorrect username or password. ";
         echo "Please try again or register as a new user. ";
         echo "Click 'OK' to return to the login page.\"); ";
-        echo "window.location.href='../../index.html'</script>";
+        echo "window.location.href='../../index.html'; </script>";
     }
     // user is staff
     else if ($row["isStaff"] && !$row["isManager"]) {

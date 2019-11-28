@@ -29,7 +29,7 @@ if ($mysqli->connect_errno) {
     echo "<script> alert(\"Could not connect to database";
     echo "Error: " . $mysqli->connect_error . ". ";
     echo "Please try again another time. Click 'OK' to go back.\"); ";
-    echo "window.location.href='./addinventoryform.php' </script>"; 
+    echo "window.location.href='./addinventoryform.php'; </script>"; 
     exit;
 }
 else {
@@ -40,7 +40,7 @@ else {
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='./addinventoryform.php' </script>";
+        echo "window.location.href='./addinventoryform.php'; </script>";
         exit();
     }
     // Check if product is in inventory. If not, add to inventory
@@ -52,14 +52,14 @@ else {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please ensure that your field values are in the correct form ";
 			echo "and try again. Click 'OK' to go back.\"); "; 
-            echo "window.location.href=./addinventoryform.php </script>";
+            echo "window.location.href='./addinventoryform.php'; </script>";
             exit;
         }
         // Go back to inventory page
         else {
             echo "<script> alert(\"Successfully added new product '" . $productname . "' ";
         	echo "to inventory! Click 'OK' to go back to inventory page.\"); "; 
-        	echo "window.location.href='./inventory.php' </script>";
+        	echo "window.location.href='./inventory.php'; </script>";
             exit;
         }
     }
@@ -67,7 +67,7 @@ else {
 		echo "<script> alert(\"Unable to add new product '" . $productname . "' ";
         echo "to inventory, product already exists in inventory. ";
 		echo "Click 'OK' to go back to inventory page.\"); "; 
-        echo "window.location.href='./inventory.php' </script>";
+        echo "window.location.href='./inventory.php'; </script>";
 		exit;
 	}
 }

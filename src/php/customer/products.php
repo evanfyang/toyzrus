@@ -24,7 +24,7 @@ if ($mysqli->connect_errno) {
     echo "<script> alert(\"Could not connect to database";
     echo "Error: " . $mysqli->connect_error . ". ";
     echo "Please try again another time. Click 'OK' to go back.\"); ";
-    echo "window.location.href='./homepage.php' </script>"; 
+    echo "window.location.href='./homepage.php'; </script>"; 
     exit;
 }
 else {

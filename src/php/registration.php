@@ -17,7 +17,7 @@ if ($mysqli->connect_errno) {
     echo "<script> alert(\"Could not connect to database";
     echo "Error: " . $mysqli->connect_error . ". ";
     echo "Please try again another time. Click 'OK' to go back.\"); ";
-    echo "window.location.href='../../../index.html' </script>"; 
+    echo "window.location.href='../../../index.html'; </script>"; 
     exit;
 }
 else {
@@ -28,7 +28,7 @@ else {
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='../html/registration.html' </script>";
+        echo "window.location.href='../html/registration.html'; </script>";
         exit;
     }
     // If username does not exist, add new user to database
@@ -38,18 +38,18 @@ else {
         if (!$result) {
             echo "<script> alert(\"Registration failed: " . $mysqli->error . ". "; 
             echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='../html/registration.html' </script>";
+            echo "window.location.href='../html/registration.html'; </script>";
             exit;
         }
         else {
             echo "<script> alert(\"Registration successful! Click 'OK' to return to login page.\"); ";
-            echo "window.location.href='../../index.html' </script>";
+            echo "window.location.href='../../index.html'; </script>";
         }
     }
     // Username already exists, prompt user to enter another username to register
     else {
         echo "<script> alert(\"The username " . $username . " already exists! ";
         echo "Please choose another username.\"); "; 
-        echo "window.location.href='../html/registration.html' </script>";
+        echo "window.location.href='../html/registration.html'; </script>";
     }
 }

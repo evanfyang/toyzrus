@@ -27,7 +27,7 @@ if ($mysqli->connect_errno) {
     echo "<script> alert(\"Could not connect to database";
     echo "Error: " . $mysqli->connect_error . ". ";
     echo "Please try again another time. Click 'OK' to go back.\"); ";
-    echo "window.location.href='./orders.php' </script>"; 
+    echo "window.location.href='./orders.php'; </script>"; 
     exit();
 }
 else {
@@ -37,7 +37,7 @@ else {
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='./orders.php' </script>";
+        echo "window.location.href='./orders.php'; </script>";
         exit();
     }
     // If order was placed more than 24 hours ago, alert user that order cannot be canceled
@@ -59,7 +59,7 @@ else {
         if (!$result) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='./orders.php' </script>";
+            echo "window.location.href='./orders.php'; </script>";
             exit();
         }
         $query = "SELECT prodID, quantity FROM Orders WHERE orderID='$orderID'";
@@ -67,7 +67,7 @@ else {
         if (!$result) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='./orders.php' </script>";
+            echo "window.location.href='./orders.php'; </script>";
             exit();
         }
         // Restock items
@@ -79,7 +79,7 @@ else {
             if (!$cancelOrderRestockQueryResult) {
                 echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
                 echo "Please try again later. Click 'OK' to go back.\"); "; 
-                echo "window.location.href='./orders.php' </script>";
+                echo "window.location.href='./orders.php'; </script>";
                 exit();
             }
         }
