@@ -90,7 +90,7 @@ function myFunction() {
     // Create table with items in users shopping cart
     echo '<table>';
     echo '<tr>';
-    echo '<th> Remove Item </th>';
+    echo '<th> Actions </th>';
     echo '<th> Product Name </th>';
     echo '<th> Category </th>';
     echo '<th> Quantity </th>';

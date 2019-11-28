@@ -37,7 +37,7 @@ else {
     if (!$shoppingCartQueryResult) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
         echo "Please try again later. Click 'OK' to go back.\"); "; 
-        echo "window.location.href='./shoppingcart.php'; </script>";
+        echo "window.location.href='./orders.php'; </script>";
         exit();
     }
     $lowStock = false;
@@ -58,7 +58,7 @@ else {
         if (!$checkProductQuantityQueryResult) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
             echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='./shoppingcart.php'; </script>";
+            echo "window.location.href='./orders.php'; </script>";
             exit();
         }
         // Not enough of a particular product to ship
@@ -71,7 +71,7 @@ else {
             if (!$productNameQueryResult) {
                 echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
                 echo "Please try again later. Click 'OK' to go back.\"); "; 
-                echo "window.location.href='./shoppingcart.php'; </script>";
+                echo "window.location.href='./orders.php'; </script>";
                 exit();
             }
             // Store information about product with low stock
@@ -81,11 +81,10 @@ else {
             $lowStockProductPrice[] = $product["price"];
             $lowStockProductQuantity[] = $product["inventory"];
             $lowStockProductCategory[] = $product["category"];
-            exit();
         }
     }
-    if($lowstock) {
-        echo '
+    if($lowStock) {
+       	?>
         <!DOCTYPE html>
         <html>
         <head>
@@ -101,9 +100,8 @@ else {
             </div>
             <div style="float:right">
                 <a href="./homepage.php">Home</a>
-                <a href="./products.php">Products</a>
+                <a href="./inventory.php">Inventory</a>
                 <a href="./orders.php" class="active">Orders</a>
-                <a href="./shoppingcart.php">Shopping Cart</a>
                 <a href="javascript:void(0);" onclick="logout()">Logout</a>
                 <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                     <i class="fa fa-bars"></i>
@@ -127,14 +125,16 @@ else {
         }
         </script>
         <div class="imgcontainer">
-            <h1 style="color:red">Error Shipping Order</h1>
-            <h3> The following items listed in <br> the table below are low in stock. </h3>
-            <img src="../../assets/orderslogo.png" alt="Avatar" class="avatar">
+            <h1 style="color:red">Unable to Ship <br> Order
+				<?php echo $orderID; ?></h1>
+			 <img src="../../assets/stafforderlogocantship.png" alt="Avatar" class="avatar">
+            <h4> The following items listed in the <br> table below are low in stock and <br> must be restocked before shipping. </h4>
         </div>
-        <div>';
+        <div>
+		<?php
         // Display each order in tabular format
         // Table headers
-        echo '<br><br>';
+        echo '<br>';
         echo '<table>';
         echo '<tr>';
         echo '<th> Product ID </th>';
@@ -151,12 +151,15 @@ else {
             echo '<td>$' . $lowStockProductPrice[$i] . '</td>';
             echo '<td>' . $lowStockProductQuantity[$i] . '</td>';
             echo '</tr>';
-            echo '</table>';
         }
+		echo '</table>';
         echo '<br><br>';
-        echo '<button type="button" onclick="';
-        echo 'javascript:window.location.href=\'./inventory.php\'" ';
-        echo 'class="secondarybtn"> Go Back to Login </button>';
+        echo '<center><button type="button" onclick="';
+        echo 'javascript:window.location.href=\'./orders.php\'" ';
+        echo 'class="secondarybtn"> Go Back to Orders </button></center>';
+		echo '</div>';
+		echo '</body>';
+		echo '</html>';
     }
     else {
         // update order status to 'Shipped'
@@ -168,20 +171,33 @@ else {
             echo "window.location.href='./orders.php'; </script>";
             exit();
         }
-        $updateProductQuantityQuery = "UPDATE Products SET inventory = 
-            inventory - '$quantity' WHERE productID = '$productID' AND 
-            inventory >= '$quantity' AND inventory > 0";
-        $updateProductQuantityQueryResult = $mysqli->query($updateProductQuantityQuery);
-        if (!$updateProductQuantityQueryResult) {
-            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
-            echo "Please try again later. Click 'OK' to go back.\"); "; 
-            echo "window.location.href='./shoppingcart.php'; </script>";
-            exit();
-        }
-        // Go back to orders page
-        header('Location: ./orders.php');
-        echo '<script>alert("Successfully shipped order ' . $orderID . '!")</script>';
-        exit();
+		// get all products associated with a particular orderID
+    	$shoppingCartQuery = "SELECT * FROM Orders WHERE orderID = '$orderID'";
+    	$shoppingCartQueryResult = $mysqli->query($shoppingCartQuery);
+    	if (!$shoppingCartQueryResult) {
+        	echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        	echo "Please try again later. Click 'OK' to go back.\"); "; 
+        	echo "window.location.href='./shoppingcart.php'; </script>";
+        	exit();
+    	}
+		while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
+        	$productID = $order["prodID"];
+        	$quantity = $order["quantity"];
+        	$updateProductQuantityQuery = "UPDATE Products SET inventory = 
+            	inventory - '$quantity' WHERE productID = '$productID' AND 
+            	inventory >= '$quantity' AND inventory > 0";
+        	$updateProductQuantityQueryResult = $mysqli->query($updateProductQuantityQuery);
+        	if (!$updateProductQuantityQueryResult) {
+            	echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            	echo "Please try again later. Click 'OK' to go back.\"); "; 
+            	echo "window.location.href='./shoppingcart.php'; </script>";
+            	exit();
+        	}
+		}
+        // Go back to orders page 
+        echo '<script> alert("Successfully shipped order ' . $orderID . '!"); ';
+		echo 'window.location.href="./orders.php";</script>';
+		exit();
     }
 }
 ?>
