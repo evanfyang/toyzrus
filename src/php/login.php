@@ -52,13 +52,14 @@ else {
     }
     // user is staff
     else if ($row["isStaff"] && !$row["isManager"]) {
-        // go to staff page
-        echo "<p>Login successful. Welcome, Staff.</p>";
+        // login successful, go to manager page
+        header("Location: ./manager/homepage.php");
+        exit;
     }
     // user is manager
     else if ($row["isStaff"] && $row["isManager"]) {
         // login successful, go to manager page
-        header("Location: ./staff/homepage.php");
+        header("Location: ./manager/homepage.php");
         exit;
     }
     // regular user
