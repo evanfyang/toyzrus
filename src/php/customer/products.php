@@ -29,7 +29,7 @@ if ($mysqli->connect_errno) {
 }
 else {
     // Get all products to display
-    $query = "SELECT * FROM Products ORDER BY category DESC;";
+    $query = "SELECT * FROM Products ORDER BY category ASC;";
     $result = $mysqli->query($query);
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";

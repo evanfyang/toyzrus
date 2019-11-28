@@ -103,7 +103,16 @@ function logout() {
 
 <div>
 <?php
-    // Display message to user if there are no orders
+	echo '<h3 style="margin-bottom:5px"> Filter Orders By Status: </h3>';
+    echo '<table style="width:350px">';
+    echo '<tr>';
+    echo '<td><input type="radio" name="status" value="All" checked> All </td>';
+    echo '<td><input type="radio" name="status" value="Pending"> Pending </td>';
+    echo '<td><input type="radio" name="status" value="Shipped"> Shipped </td>';
+    echo '<td><input type="radio" name="status" value="Canceled"> Canceled </td>';
+    echo '</tr>';
+	echo '</table>';
+	// Display message to user if there are no orders
     if (sizeOf($orderIDs) == 0) {
         echo '<center><h3 style="color:red"> No Orders to Display... <h3></center>';
     }
@@ -209,6 +218,7 @@ function logout() {
                 echo 'value="' . $orderIDs[$i] . '"class="secondarybtn"> Cancel ';
                 echo 'Order ' . $orderIDs[$i] . '</button></center></form>';
             }
+			echo '<hr>';
         }
     }
 ?>

@@ -7,7 +7,7 @@ CREATE DATABASE ecommerce;
 USE ecommerce;
 
 /* database tables */
-CREATE TABLE Users (userID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, username VARCHAR(40) NOT NULL, password VARCHAR(40) NOT NULL, firstname VARCHAR(40) NOT NULL, lastname VARCHAR(40) NOT NULL, isStaff BOOLEAN NOT NULL, isManager BOOLEAN NOT NULL); 
+CREATE TABLE Users (userID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, username VARCHAR(40) NOT NULL, password VARCHAR(40) NOT NULL, firstname VARCHAR(40) NOT NULL, lastname VARCHAR(40) NOT NULL, address VARCHAR(120), isStaff BOOLEAN NOT NULL, isManager BOOLEAN NOT NULL); 
 CREATE TABLE Products (productID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, name VARCHAR(40) NOT NULL, price DECIMAL(10,2) NOT NULL, inventory INT NOT NULL, category VARCHAR(30) NOT NULL);
 CREATE TABLE Orders (orderID INT NOT NULL, userID INT NOT NULL, prodID INT NOT NULL, quantity INT NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID),
@@ -16,11 +16,11 @@ CREATE TABLE ShoppingBasket (userID INT NOT NULL, prodID INT NOT NULL, quantity 
 	FOREIGN KEY (userID) REFERENCES Users(userID), FOREIGN KEY (prodID) REFERENCES Products(productID));
 
 /* Create initial users */
-INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('staff', 'password', 'Staff', 'Personnel', TRUE, FALSE);
-INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('manager', 'password', 'Store', 'Manager', TRUE, TRUE);
-INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('user', 'password', 'Test', 'User', FALSE, FALSE); 
+INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('staff', 'password', 'Staff', 'Personnel', NULL, TRUE, FALSE);
+INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('manager', 'password', 'Store', 'Manager', NULL, TRUE, TRUE);
+INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('user', 'password', 'Test', 'User', '329 Rose St., Lexington, KY USA 40508' ,FALSE, FALSE); 
 /* professor access */
-INSERT INTO Users (username, password, firstname, lastname, isStaff, isManager) VALUES ('cs405', 'cs405', 'Dr.', 'Liu', FALSE, FALSE); 
+INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('cs405', 'cs405', 'Dr.', 'Liu', '329 Rose St., Lexington, KY USA 40508', FALSE, FALSE); 
 
 /*
 Products sample data:

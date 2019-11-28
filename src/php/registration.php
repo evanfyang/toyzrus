@@ -4,6 +4,7 @@ $username = $_POST["username"];
 $password = $_POST["password"];
 $firstname = $_POST["firstname"];
 $lastname = $_POST["lastname"];
+$address = $_POST["address"];
 
 // connect to mysql
 $host = "localhost";
@@ -33,7 +34,7 @@ else {
     }
     // If username does not exist, add new user to database
     else if ($result->num_rows === 0) {
-        $insertUser = "INSERT INTO Users(username,password,firstname,lastname,isStaff,isManager) VALUES('$username','$password','$firstname','$lastname',FALSE,FALSE)";
+        $insertUser = "INSERT INTO Users(username,password,firstname,lastname,address,isStaff,isManager) VALUES('$username','$password','$firstname','$lastname','$address',FALSE,FALSE)";
         $result = $mysqli->query($insertUser);
         if (!$result) {
             echo "<script> alert(\"Registration failed: " . $mysqli->error . ". "; 

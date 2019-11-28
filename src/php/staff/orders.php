@@ -109,6 +109,22 @@ function logout() {
     }
     // Display each order in tabular format
     for ($i = 0; $i < sizeOf($orderIDs); $i++) {
+		// get all orders from a particular user 
+    	$userInfoQuery = "SELECT * FROM Users WHERE userID = '$userIDs[$i]'";
+    	$userInfoQueryResults = $mysqli->query($userInfoQuery);
+    	if (!$userInfoQueryResults) {
+        	echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+        	echo "Please try again later. Click 'OK' to go back.\"); </script>"; 
+        	exit;
+    	}
+		$userInfo = $userInfoQueryResults->fetch_array(MYSQLI_ASSOC);
+		echo '<div style="float:left; text-align:left">';
+		echo '<p style="margin-bottom:5px"><b> Order Placed By ';
+		echo $userInfo["firstname"] . ' ' . $userInfo["lastname"] . '';
+		echo ' (username: ' . $userInfo["username"] . ') ';
+		echo '<br> Ship To: ' . $userInfo["address"] . '';
+		echo '</b></p>';
+		echo '</div>';
         // Table headers
         echo '<br><br>';
         echo '<table>';
@@ -142,7 +158,7 @@ function logout() {
         echo '</table>';
         // Display order ID, order status, and date + time order was placed
         echo '<div style="float:left; text-align:left">';
-        echo '<p><b> Order ID: ' . $orderIDs[$i] . '<br>';
+        echo '<p style="margin-top:5px"><b> Order ID: ' . $orderIDs[$i] . '<br>';
         if ($orderStatuses[$i] == "Canceled") {
             echo 'Order Status: <mark style="background-color:#F44336">';
             echo $orderStatuses[$i] . '</mark><br>';
@@ -188,10 +204,10 @@ function logout() {
             // Display total price, tax, and subtotal
             echo '<div style="float:right; margin-right:10px; text-align:right">';  
             echo '<div style="float:left; margin-top:0px">';
-            echo '<p style="float:right"><b> Total:&nbsp <br>Sales Tax:&nbsp <br>Subtotal:&nbsp </b></p>';
+            echo '<p style="float:right; margin-top:5px"><b> Total:&nbsp <br>Sales Tax:&nbsp <br>Subtotal:&nbsp </b></p>';
             echo '</div>';
             echo '<div style="float:right; margin-top:0px">';
-            echo '<p style="float:right"><b>$' . $total . '<br>';
+            echo '<p style="float:right; margin-top:5px"><b>$' . $total . '<br>';
             echo '$' . $tax . '<br>$' . $subtotal . '</b></p>';
             echo '</div>';
             echo '</div>';
@@ -204,6 +220,8 @@ function logout() {
                 echo 'value="' . $orderIDs[$i] . '"class="primarybtn"> Ship ';
                 echo 'Order ' . $orderIDs[$i] . '</button></center></form>';
             }
+			//echo '<br>';
+			echo '<hr>';
         }
     }
 ?>

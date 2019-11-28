@@ -10,8 +10,8 @@
 <form action="../php/registration.php" method="POST">
   <div class="imgcontainer">
     <h1>ToyzRUs New User Registration</h1>
-    <p> Please enter a username and  
-        <br> password to register an account.</p>
+    <p> Please enter the following information 
+        <br>  about yourself to register an account.</p>
     <img src="../assets/registrationlogo.png" alt="Avatar" class="avatar">
   </div>
 
@@ -24,6 +24,10 @@
 	
 	<label for="lastname"><b>Last Name</b></label>
     <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname" required>
+
+	<label for="address"><b>Address</b></label>
+    <input type="text" placeholder="Address Line 1, Address Line 2, City, State/Province/Region, Country, Zip Code" name="address" id="address" required>
+
 
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" id="password" required>
