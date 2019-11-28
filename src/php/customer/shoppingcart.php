@@ -101,12 +101,14 @@ function myFunction() {
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $cartIsEmpty = FALSE;
         echo '<tr>';
+        // add button to allow removal of product from cart
         echo '<form action="./removefromcart.php" method="POST"><td><center>'; 
         echo '<button name="id" value="' . $row["productID"] .'" type="submit" ';
         echo 'onclick="removeFromCartAlert()"> Remove from Cart </button>';
         echo '</center></td></form>';
         echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
+        // update quantity of a product in cart
         echo '<form action="./updatequantity.php" method="POST"><input ';
         echo 'type=hidden name="productID" value ="' . $row["productID"] . '" ';
         echo 'style="display:none"></input><td><center><input type=number ';

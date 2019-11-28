@@ -57,8 +57,9 @@ else {
     }
     // user is manager
     else if ($row["isStaff"] && $row["isManager"]) {
-        // go to manager page
-        echo "<p>Login successful. Welcome, Manager.</p>";
+        // login successful, go to manager page
+        header("Location: ./staff/homepage.php");
+        exit;
     }
     // regular user
     else {
