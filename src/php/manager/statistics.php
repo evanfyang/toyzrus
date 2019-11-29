@@ -29,7 +29,7 @@ if ($mysqli->connect_errno) {
 }
 // get user firstname and lastname and store in current session
 else {
-    // Get all products to display
+    // Get all products from orders within the past week
     $query = "SELECT * FROM Products ORDER BY category;";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -56,10 +56,10 @@ else {
     </div>
     <div style="float:right">
         <a href="./homepage.php">Home</a>
-        <a href="./inventory.php" class="active">Inventory</a>
+        <a href="./inventory.php">Inventory</a>
         <a href="./promotions.php">Promotions</a>
         <a href="./orders.php">Orders</a>
-        <a href="./statistics.php">Statistics</a>
+        <a href="./statistics.php" class="active">Statistics</a>
         <a href="javascript:void(0);" onclick="logout()">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -85,20 +85,12 @@ function logout() {
 </script>
 
 <div class="imgcontainer">
-    <h1>Manage Inventory</h1>
-    <img src="../../assets/staffinventorylogo.png" alt="Avatar" class="avatar">
+    <h1>Product Sales Statistics</h1>
+    <img src="../../assets/statisticslogo.png" alt="Avatar" class="avatar">
 	<br>
 </div>
 
-<center><button type="button" onclick="addInventory()" class="primarybtn"> Add New Product </button></center>
-
 <br>
-
-<script>
-function addInventory() {
-	window.location="./addinventoryform.php";
-}
-</script>
 
 <div>
 <?php
@@ -107,61 +99,65 @@ function addInventory() {
     echo '<tr>';
     echo '<th> Product Name </th>';      
     echo '<th> Category </th>';
-    echo '<th> Price </th>';
-    echo '<th> Stock </th>';
-    echo '<th> Quantity </th>';
-	echo '<th> Actions </th>';
+    echo '<th> Amount Sold Last Week </th>';
+    echo '<th> Amount Sold Last Month </th>';
+	echo '<th> Amount Sold Last Year </th>';
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
-        echo '<td>$' . $row["price"] . '</td>';
-        // Out of stock product, disable 'Add to Cart' button
-        if ($row["inventory"] == 0) {
-            echo '<td><center><mark style="background-color:#F44336">';
-            echo 'Out of Stock</mark></center></td>';
+        $productID = $row["productID"];
+        // Get all products from orders within the past week
+        $lastweek = new DateTime('-1 week');
+        $lastweek = $lastweek->format('Y-m-d H:i:s');
+        $pastWeekOrderAmountQuery = "SELECT SUM(quantity) as sum FROM Orders 
+            WHERE prodID='$productID' AND status!='Canceled' AND 
+            order_datetime>='$lastweek' GROUP BY prodID;";
+        $pastWeekOrderAmountQueryResult = $mysqli->query($pastWeekOrderAmountQuery);
+        if (!$pastWeekOrderAmountQueryResult) {
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            exit;
         }
-        // Low stock
-        else if ($row["inventory"] <= 5) {
-            echo '<td><center><mark style="background-color:#FFE158">';
-            echo 'Low Stock</mark></center></td>';
+        $soldThisPastWeek = $pastWeekOrderAmountQueryResult -> fetch_assoc();
+        echo '<td>' . $soldThisPastWeek["sum"] . '</td>';
+        
+        // Get all products from orders within the past month
+        $lastmonth = new DateTime('-1 month');
+        $lastmonth = $lastmonth->format('Y-m-d H:i:s');
+        $pastMonthOrderAmountQuery = "SELECT SUM(quantity) as sum FROM Orders 
+            WHERE prodID='$productID' AND status!='Canceled' AND 
+            order_datetime>='$lastmonth' GROUP BY prodID;";
+        $pastMonthOrderAmountQueryResult = $mysqli->query($pastMonthOrderAmountQuery);
+        if (!$pastMonthOrderAmountQueryResult) {
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            exit;
         }
-        // In stock
-        else {
-            echo '<td><center><mark style="background-color:#4F7FE4">';
-            echo 'In Stock</mark></center></td>';
+        $soldThisPastMonth = $pastMonthOrderAmountQueryResult -> fetch_assoc();
+        echo '<td>' . $soldThisPastMonth["sum"] . '</td>';
+
+        // Get all products from orders within the past year
+        $lastyear = new DateTime('-1 year');
+        $lastyear = $lastyear->format('Y-m-d H:i:s');
+        $pastYearOrderAmountQuery = "SELECT SUM(quantity) as sum FROM Orders 
+            WHERE prodID='$productID' AND status!='Canceled' AND 
+            order_datetime>='$lastyear' GROUP BY prodID;";
+        $pastYearOrderAmountQueryResult = $mysqli->query($pastYearOrderAmountQuery);
+        if (!$pastYearOrderAmountQueryResult) {
+            echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
+            echo "Please try again later. Click 'OK' to go back.\"); "; 
+            exit;
         }
-        // update inventory for a particular product
-        echo '<form action="./updateinventory.php" method="POST"><input ';
-        echo 'type=hidden name="productID" value ="' . $row["productID"] . '" ';
-        echo 'style="display:none"></input><td><center><input type=number ';
-        echo 'name="quantity" value="' . $row["inventory"] .'" style="width:3em; ';
-        echo 'text-align:center" onchange=this.form.submit()></input></center>';
-        echo '</td></form>';
-        // button to allow removal of product from cart
-        echo '<form action="./removefrominventory.php" method="POST"><td><center>'; 
-        echo '<button name="id" value="' . $row["productID"] .'" type="submit" ';
-        echo 'onclick="return removeFromInventoryAlert()"> Remove </button>';
-        echo '</center></td></form>';
-		echo '</tr>';
+        $soldThisPastYear = $pastYearOrderAmountQueryResult -> fetch_assoc();
+        echo '<td>' . $soldThisPastYear["sum"] . '</td>';
     }
     echo '</table>';
     $mysqli->close();
 ?>
 </div>
-
-<script>
-function removeFromInventoryAlert() {
-    if (confirm("Are you sure you want to remove this item from inventory?")) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-</script>
 
 </body>
 </html>
