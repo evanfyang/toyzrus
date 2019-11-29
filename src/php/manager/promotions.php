@@ -30,7 +30,7 @@ if ($mysqli->connect_errno) {
 // get user firstname and lastname and store in current session
 else {
     // Get all products to display
-    $query = "SELECT * FROM Products;";
+    $query = "SELECT * FROM Products ORDER BY category;";
     $result = $mysqli->query($query);
     if (!$result) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";

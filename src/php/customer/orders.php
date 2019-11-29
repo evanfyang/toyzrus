@@ -127,8 +127,8 @@ function logout() {
             echo '<th> Product Name </th>';
             echo '<th> Category </th>';
             echo '<th> Quantity </th>';
-            echo '<th> Discount </th>';
             echo '<th> Each </th>';
+            echo '<th> Discount </th>';
             echo '<th> Total </th>';
             echo '</tr>';
             // Get product information from a particular order that the user placed
@@ -147,9 +147,9 @@ function logout() {
                 echo '<td>' . $row["name"] . '</td>';
                 echo '<td>' . $row["category"] . '</td>';
                 echo '<td>' . $row["quantity"] . '</td>';
-                echo '<td style="color:red">$' . $row["price"]*($row["promotions"] / 100) . '</td>';
                 echo '<td>$' . $row["price"] . '</td>';
-                echo '<td>$' . ($row["price"]-($row["price"]*($row["promotions"] / 100)))*$row["quantity"] . '</td>';
+				echo '<td style="color:red">-$' . number_format($row["price"]*($row["promotions"] / 100)*$row["quantity"], 2, '.', '') . '</td>';
+                echo '<td>$' . number_format(($row["price"]-($row["price"]*($row["promotions"] / 100)))*$row["quantity"], 2, '.', '') . '</td>';
                 echo '</tr>';
             }
             echo '</table>';

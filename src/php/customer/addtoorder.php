@@ -45,7 +45,9 @@ else {
         }
     } while (!uniqueID);
     // get all products associated with a particular userID
-    $shoppingCartQuery = "SELECT * FROM ShoppingBasket WHERE userID = '$userID'";
+    $shoppingCartQuery = "SELECT * FROM (SELECT * FROM ShoppingBasket) 
+        AS ShoppingCart JOIN (SELECT * FROM Products) AS AllProducts ON 
+        ShoppingCart.prodID = AllProducts.productID WHERE userID='$userID'";
     $shoppingCartQueryResult = $mysqli->query($shoppingCartQuery);
     if (!$shoppingCartQueryResult) {
         echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";
@@ -56,11 +58,14 @@ else {
     // insert all products into order table
     while ($order = $shoppingCartQueryResult->fetch_array(MYSQLI_ASSOC)) {
         $productID = $order["prodID"];
-        $quantity = $order["quantity"]; 
+        $quantity = $order["quantity"];
+		$price = $order["price"];
+		$promotions = $order["promotions"]; 
+		$discount = $price * ($promotions/100);
         $addOrderQuery = "INSERT INTO Orders (orderID, userID, prodID, 
             quantity, status, money_saved, order_datetime) VALUES 
             ('$newOrderID', '$userID', '$productID', '$quantity', 'Pending', 
-            0, NOW())";
+            '$discount', NOW())";
         $addOrderQueryResult = $mysqli->query($addOrderQuery);
         if (!$addOrderQueryResult) {
             echo "<script> alert(\"Query failed: " . $mysqli->error . ". ";

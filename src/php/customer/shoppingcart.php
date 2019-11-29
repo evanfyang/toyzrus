@@ -94,8 +94,8 @@ function myFunction() {
     echo '<th> Product Name </th>';
     echo '<th> Category </th>';
     echo '<th> Quantity </th>';
-    echo '<th> Discount </th>';
     echo '<th> Each </th>';
+    echo '<th> Discount </th>';
     echo '<th> Total </th>';
     echo '</tr>';
     // Display products with information on row
@@ -112,13 +112,13 @@ function myFunction() {
         // update quantity of a product in cart
         echo '<form action="./updatequantity.php" method="POST"><input ';
         echo 'type=hidden name="productID" value ="' . $row["productID"] . '" ';
-        echo 'style="display:none"></input><td><center><input type=number ';
+        echo 'style="display:none"></input><td><center><input type=number min="1" ';
         echo 'name="quantity" value="' . $row["quantity"] .'" style="width:3em; ';
         echo 'text-align:center" onchange=this.form.submit()></input></center>';
         echo '</td></form>';
-        echo '<td style="color:red">$' . $row["price"]*($row["promotions"] / 100) . '</td>';
         echo '<td>$' . $row["price"] . '</td>';
-        echo '<td>$' . ($row["price"]-($row["price"]*($row["promotions"] / 100)))*$row["quantity"] . '</td>';
+		echo '<td style="color:red">-$' . number_format($row["price"]*($row["promotions"] / 100)*$row["quantity"], 2, '.', '') . '</td>';
+        echo '<td>$' . number_format(($row["price"]-($row["price"]*($row["promotions"] / 100)))*$row["quantity"], 2, '.', '') . '</td>';
         echo '</tr>';
     }
     echo '</table>';
