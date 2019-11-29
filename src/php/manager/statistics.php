@@ -99,9 +99,9 @@ function logout() {
     echo '<tr>';
     echo '<th> Product Name </th>';      
     echo '<th> Category </th>';
-    echo '<th> Amount Sold Last Week </th>';
-    echo '<th> Amount Sold Last Month </th>';
-	echo '<th> Amount Sold Last Year </th>';
+    echo '<th> Sold Last Week </th>';
+    echo '<th> Sold Last Month </th>';
+	echo '<th> Sold Last Year </th>';
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
@@ -121,9 +121,14 @@ function logout() {
             echo "Please try again later. Click 'OK' to go back.\"); "; 
             exit;
         }
-        $soldThisPastWeek = $pastWeekOrderAmountQueryResult -> fetch_assoc();
-        echo '<td>' . $soldThisPastWeek["sum"] . '</td>';
-        
+		if (mysqli_num_rows($pastWeekOrderAmountQueryResult)==0) {
+			echo '<td><center> 0 </center></td>';
+		}
+		else {
+        	$soldThisPastWeek = $pastWeekOrderAmountQueryResult -> fetch_assoc();
+			echo '<td><center>' . $soldThisPastWeek["sum"] . '</center></td>';
+		}
+                
         // Get all products from orders within the past month
         $lastmonth = new DateTime('-1 month');
         $lastmonth = $lastmonth->format('Y-m-d H:i:s');
@@ -136,8 +141,13 @@ function logout() {
             echo "Please try again later. Click 'OK' to go back.\"); "; 
             exit;
         }
-        $soldThisPastMonth = $pastMonthOrderAmountQueryResult -> fetch_assoc();
-        echo '<td>' . $soldThisPastMonth["sum"] . '</td>';
+		if (mysqli_num_rows($pastMonthOrderAmountQueryResult)==0) {
+			echo '<td><center> 0 </center></td>';
+		}
+		else {
+        	$soldThisPastMonth = $pastMonthOrderAmountQueryResult -> fetch_assoc();
+			echo '<td><center>' . $soldThisPastMonth["sum"] . '</center></td>';
+		} 
 
         // Get all products from orders within the past year
         $lastyear = new DateTime('-1 year');
@@ -151,9 +161,13 @@ function logout() {
             echo "Please try again later. Click 'OK' to go back.\"); "; 
             exit;
         }
-        $soldThisPastYear = $pastYearOrderAmountQueryResult -> fetch_assoc();
-        echo '<td>' . $soldThisPastYear["sum"] . '</td>';
-    }
+        if (mysqli_num_rows($pastYearOrderAmountQueryResult)==0) {
+			echo '<td><center> 0 </center></td>';
+		}
+		else {
+        	$soldThisPastYear = $pastYearOrderAmountQueryResult -> fetch_assoc();
+			echo '<td><center>' . $soldThisPastYear["sum"] . '</center></td>';
+		}    }
     echo '</table>';
     $mysqli->close();
 ?>

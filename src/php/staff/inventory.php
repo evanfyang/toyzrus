@@ -108,7 +108,7 @@ function addInventory() {
     echo '<th> Price </th>';
     echo '<th> Stock </th>';
     echo '<th> Quantity </th>';
-	echo '<th> Actions </th>';
+	//echo '<th> Actions </th>';
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
@@ -139,11 +139,11 @@ function addInventory() {
         echo 'text-align:center" onchange=this.form.submit()></input></center>';
         echo '</td></form>';
         // button to allow removal of product from cart
-        echo '<form action="./removefrominventory.php" method="POST"><td><center>'; 
+        /*echo '<form action="./removefrominventory.php" method="POST"><td><center>'; 
         echo '<button name="id" value="' . $row["productID"] .'" type="submit" ';
         echo 'onclick="return removeFromInventoryAlert()"> Remove </button>';
         echo '</center></td></form>';
-		echo '</tr>';
+		echo '</tr>';*/
     }
     echo '</table>';
     $mysqli->close();

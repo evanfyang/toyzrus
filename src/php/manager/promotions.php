@@ -100,8 +100,8 @@ function logout() {
     echo '<th> Product Name </th>';      
     echo '<th> Category </th>';
     echo '<th> Price </th>';
-    echo '<th> Stock </th>';
     echo '<th> Promo Rate (%) </th>';
+	echo '<th> Discount </th>';
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
@@ -109,21 +109,6 @@ function logout() {
         echo '<td>' . $row["name"] . '</td>';
         echo '<td>' . $row["category"] . '</td>';
         echo '<td>$' . $row["price"] . '</td>';
-        // Out of stock product
-        if ($row["inventory"] == 0) {
-            echo '<td><center><mark style="background-color:#F44336">';
-            echo 'Out of Stock</mark></center></td>';
-        }
-        // Low stock
-        else if ($row["inventory"] <= 5) {
-            echo '<td><center><mark style="background-color:#FFE158">';
-            echo 'Low Stock</mark></center></td>';
-        }
-        // In stock
-        else {
-            echo '<td><center><mark style="background-color:#4F7FE4">';
-            echo 'In Stock</mark></center></td>';
-        }
         // update promotions for a particular product
         echo '<form action="./updatepromotion.php" method="POST"><input ';
         echo 'type=hidden name="productID" value ="' . $row["productID"] . '" ';
@@ -131,6 +116,7 @@ function logout() {
         echo 'name="promotion" value="' . $row["promotions"] .'" style="width:3em; ';
         echo 'text-align:center" onchange=this.form.submit() min="0" max="100">';
         echo '</input></center></td></form>';
+		echo '<td style="color:red">-$' . number_format($row["price"]*($row["promotions"] / 100), 2, '.', '') . '</td>';
     }
     echo '</table>';
     $mysqli->close();
