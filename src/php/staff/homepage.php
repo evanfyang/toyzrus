@@ -75,7 +75,7 @@ else {
     <h2>Welcome, <?php echo $firstname . " " . $lastname ?>!</h2>
     <p> Please select one of the links above <br> 
         to start managing inventory and orders!</p> 
-    <img src="../../assets/staffhomepagelogo.png" alt="Avatar" class="avatar">
+    <img src="../../assets/staffhomepagelogo.png" alt="Avatar" class="avatar" style="max-width:250px">
 </div>
 
 <script>
