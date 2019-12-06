@@ -20,7 +20,7 @@ INSERT INTO Users (username, password, firstname, lastname, address, isStaff, is
 INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('manager', 'password', 'Store', 'Manager', NULL, TRUE, TRUE);
 INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('user', 'password', 'Test', 'User', '329 Rose St., Lexington, KY USA 40508' ,FALSE, FALSE); 
 /* professor access */
-INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('cs405', 'cs405', 'Dr.', 'Liu', '329 Rose St., Lexington, KY USA 40508', FALSE, FALSE); 
+INSERT INTO Users (username, password, firstname, lastname, address, isStaff, isManager) VALUES ('cs405', 'cs405', 'Dr.', 'Liu', '329 Rose St., Lexington, KY USA 40508', TRUE, TRUE); 
 
 /*
 Products sample data:
