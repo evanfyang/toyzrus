@@ -36,6 +36,12 @@ else {
         echo "Please try again later. Click 'OK' to go back.\"); </script>"; 
         exit;
     }
+    $categoryQuery = "SELECT DISTINCT category FROM Products ORDER BY category ASC;";
+    $categories = $mysqli->query($categoryQuery);
+    if (!$categories) {
+        echo "<script> alert(\"Query failed to retrieve categories: " . $mysqli->error . ", ";
+        echo "Please try again later. Click 'OK' to go back.\"); </script>";
+    }
 }
 ?>
 
@@ -89,6 +95,26 @@ function logout() {
 
 <div>
 <?php
+    //display filter
+    echo '<table>';
+    echo '<tr>';
+    echo '<th> Filter: </th>';
+    echo '<th> <select name="selectCat">';
+    echo '<option value="All"> All </option>';
+    while ($catRow = $result->fetch_assoc()) {
+        echo '<option value="' $catRow["category"] . '"> ' . $catRow["category"] . '</option>';
+    }
+    echo '</select> </th>';
+    echo '<th> <input type="text" name="productName"> </th>';
+    if (isset($_POST['selectCat'])) {
+        $selectedCat = $_POST['selectCat'];
+    }
+    if (isset($_POST['productName'])) {
+        $productSearch = $_POST['productName'];
+    } else {
+        $productSearch = '';
+    }
+
     // Display table header
     echo '<form action="./addtocart.php" method="POST">';
     echo '<table>';
@@ -102,36 +128,40 @@ function logout() {
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
-        echo '<tr>';
-        echo '<td>' . $row["name"] . '</td>';
-        echo '<td>' . $row["category"] . '</td>';
-        echo '<td>$' . $row["price"] . '</td>';
-        echo '<td>' . $row["promotions"] . '%</td>';
-        // Out of stock product, disable 'Add to Cart' button
-        if ($row["inventory"] == 0) {
-            echo '<td><center><mark style="background-color:#F44336">';
-            echo 'Out of Stock</mark></center></td>';
-            echo '<td><center><button name="id" value="' . $row["productID"] . '"';
-            echo 'type="submit" onclick="addToCartAlert()" disabled> ';
-            echo 'Add to Cart </button></center></td>';
+        if ($row['category'] == $selectedCat or $selectedCat == "All" ) {
+            if ($row['name'] == $productSearch or $productSearch == "") {
+                echo '<tr>';
+                echo '<td>' . $row["name"] . '</td>';
+                echo '<td>' . $row["category"] . '</td>';
+                echo '<td>$' . $row["price"] . '</td>';
+                echo '<td>' . $row["promotions"] . '%</td>';
+                // Out of stock product, disable 'Add to Cart' button
+                if ($row["inventory"] == 0) {
+                    echo '<td><center><mark style="background-color:#F44336">';
+                    echo 'Out of Stock</mark></center></td>';
+                    echo '<td><center><button name="id" value="' . $row["productID"] . '"';
+                    echo 'type="submit" onclick="addToCartAlert()" disabled> ';
+                    echo 'Add to Cart </button></center></td>';
+                }
+                // Low stock
+                else if ($row["inventory"] <= 5) {
+                    echo '<td><center><mark style="background-color:#FFE158">';
+                    echo 'Low Stock</mark></center></td>';
+                    echo '<td><center><button name="id" value="' . $row["productID"] .'"';
+                    echo 'type="submit" onclick="addToCartAlert()"> '; 
+                    echo 'Add to Cart </button></center></td>';
+                }
+                // In stock
+                else {
+                    echo '<td><center><mark style="background-color:#4F7FE4">';
+                    echo 'In Stock</mark></center></td>';
+                    echo '<td><center><button name="id" value="' . $row["productID"] .'"';
+                    echo 'type="submit" onclick="addToCartAlert()"> '; 
+                    echo 'Add to Cart </button></center></td>';
+                }
+                echo '</tr>';
+            }
         }
-        // Low stock
-        else if ($row["inventory"] <= 5) {
-            echo '<td><center><mark style="background-color:#FFE158">';
-            echo 'Low Stock</mark></center></td>';
-            echo '<td><center><button name="id" value="' . $row["productID"] .'"';
-            echo 'type="submit" onclick="addToCartAlert()"> '; 
-            echo 'Add to Cart </button></center></td>';
-        }
-        // In stock
-        else {
-            echo '<td><center><mark style="background-color:#4F7FE4">';
-            echo 'In Stock</mark></center></td>';
-            echo '<td><center><button name="id" value="' . $row["productID"] .'"';
-            echo 'type="submit" onclick="addToCartAlert()"> '; 
-            echo 'Add to Cart </button></center></td>';
-        }
-        echo '</tr>';
     }
     echo '</table>';
     echo '</form>';
