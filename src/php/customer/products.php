@@ -101,8 +101,8 @@ function logout() {
     echo '<th> Filter: </th>';
     echo '<th> <select name="selectCat">';
     echo '<option value="All"> All </option>';
-    while ($catRow = $result->fetch_assoc()) {
-        echo '<option value="' $catRow["category"] . '"> ' . $catRow["category"] . '</option>';
+    while ($catRow = $categories->fetch_assoc()) {
+        echo '<option value="' . $catRow['category'] . '"> ' . $catRow['category'] . '</option>';
     }
     echo '</select> </th>';
     echo '<th> <input type="text" name="productName"> </th>';
