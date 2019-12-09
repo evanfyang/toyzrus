@@ -12,6 +12,10 @@ $userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
+// get filter category and keyword
+$selectedCat = $_POST['selectCat'];
+$productSearch = $_POST['productName'];
+
 // connect to mysql
 $host = "localhost";
 $mysqlUser = "root";
@@ -100,24 +104,20 @@ function logout() {
 	echo '<table style="width:300px">';
     echo '<tr>';
     echo '<th> <select name="selectCat">';
-    echo '<option value="All"> All </option>';
+    echo '<option value="' . $selectedCat .'">' . $selectedCat . '</option>';
     while ($catRow = $categories->fetch_assoc()) {
-        echo '<option value="' . $catRow['category'] . '"> ' . $catRow['category'] . '</option>';
-    }
-    echo '</select> </th>';
-    echo '<th> <input type="text" name="productName"> </th>';
-    echo '<td><center><button name="filter" ';
-   	echo 'type="submit"> Filter </button></center></td>';
+		if ($catRow['category'] != $selectedCat) {
+        	echo '<option value="' . $catRow['category'] . '"> ' . $catRow['category'] . '</option>';
+    	}
+	}
+	echo '<option value="All"> All </option>';
+	echo '</select> </th>';
+	echo '<th> <input type="text" name="productName"';
+	echo 'value="'. $productSearch . '"> </th>';
+	echo '<td><center><button name="filter" ';
+	echo 'type="submit"> Filter </button></center></td>';
 	echo '</table></form>';
 	echo '<br><br>';
-	/*if (isset($_POST['selectCat'])) {
-        //$selectedCat = $_POST['selectCat'];
-    }
-    if (isset($_POST['productName'])) {
-        //$productSearch = $_POST['productName'];
-    } else {
-        $productSearch = '';
-    }*/
 
     // Display table header
     echo '<form action="./addtocart.php" method="POST">';
@@ -132,8 +132,8 @@ function logout() {
     echo '</tr>';
     // Add products into table
     while ($row = $result->fetch_assoc()) {
-        //if ($row['category'] == $selectedCat or $selectedCat == "All" ) {
-            //if ($row['name'] == $productSearch or $productSearch == "") {
+        if ($row['category'] == $selectedCat or $selectedCat == "All" ) {
+            if (strpos(strtolower($row['name']), strtolower($productSearch)) !== false or $productSearch == "") {
                 echo '<tr>';
                 echo '<td>' . $row["name"] . '</td>';
                 echo '<td>' . $row["category"] . '</td>';
@@ -164,8 +164,8 @@ function logout() {
                     echo 'Add to Cart </button></center></td>';
                 }
                 echo '</tr>';
-            //}
-        //}
+            }
+        }
     }
     echo '</table>';
     echo '</form>';
@@ -179,3 +179,4 @@ function addToCartAlert() {
 </script>
 </body>
 </html>
+
