@@ -109,15 +109,16 @@ function logout() {
     }
     else {
         // Filter by order status
+        echo '<form action="./filterorders.php" method="POST">';
         echo '<h3 style="margin-bottom:5px"> Filter Orders By Status: </h3>';
         echo '<table style="width:300px">';
         echo '<tr>';
-        echo '<td><input type="radio" name="status" value="All" checked> All </td>';
-        echo '<td><input type="radio" name="status" value="Pending"> Pending </td>';
-        echo '<td><input type="radio" name="status" value="Shipped"> Shipped </td>';
-        echo '<td><input type="radio" name="status" value="Canceled"> Canceled </td>';
+        echo '<td><input type="radio" name="status" value="All" checked onchange=this.form.submit()> All </td>';
+        echo '<td><input type="radio" name="status" value="Pending" onchange=this.form.submit()> Pending </td>';
+        echo '<td><input type="radio" name="status" value="Shipped" onchange=this.form.submit()> Shipped </td>';
+        echo '<td><input type="radio" name="status" value="Canceled" onchange=this.form.submit()> Canceled </td>';
         echo '</tr>';
-        echo '</table>';
+        echo '</table></form>';
         // Display each order in tabular format
         for ($i = 0; $i < sizeOf($orderIDs); $i++) {
             // Table headers
